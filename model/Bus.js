@@ -1,53 +1,24 @@
 const mongoose = require('mongoose');
 
 const Bus = mongoose.model('Bus', {
-    operatorName : {
-        type : String, 
-        required : true, 
+    number_plate:{
+        type:String,
+        required:true
     },
-    busId : {
-        type : String, 
-        required : true, 
-    }, 
-    departureTime : {
-    type : String, 
-    required : true, 
-    }, 
-    seats : {
-            type : Number,
-    required : true, 
-    }, 
-    busType : {
-        type : String, 
-    required : true,   
-    }, 
-        rating : {
-            type : Number, 
-             required : true, 
+    model:{
+        type:String,
+        required:true
     },
-    departureLocation : {
-        type : String, 
-        required : true, 
-    }, 
-    arrivalLocation : {
-        type : String, 
-        required : true, 
-    }, 
-    duration : {
-        type : Number, 
-        required : true, 
+    year:{
+        type:String,
+        required:true
     },
-    images : {
-        type : String, 
-        required : true, 
-    }, 
-    liveTracking : {
-        type : boolean, 
-        required : true, 
-    }, 
-    cancellable : {
-        type : boolean, 
-        required : true, 
-    }    
+    capacity:{
+        type:Number,
+        required:true
+    },
+    created_on:{
+        type:Date
+    }
 })
 module.exports = Bus

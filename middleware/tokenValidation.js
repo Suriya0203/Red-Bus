@@ -10,12 +10,14 @@ module.exports = function (req, res, next){
             const authHeader = req.headers['authorization']
             const bearerToken = authHeader.split(' ')
             const token = bearerToken[1]
-             jwt.verify(token, process.env.JWT_KEY, async (err, payload)=>{
+            jwt.verify(token, process.env.JWT_KEY, async (err, payload)=>{
                 if(err){
                     return res.json("Unauthorized user");
                 }
                 req.payload = payload
-                console.log(req.payload)
+                
+                next()
+                console.log(req.payload._id,123)
              })
         
     }catch(err){

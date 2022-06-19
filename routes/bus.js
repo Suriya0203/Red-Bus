@@ -1,0 +1,76 @@
+const router =require("express").Router();
+const bus=require("../model/Bus");
+const user=require("../model/User")
+const auth=require("../middleware/tokenValidation")
+const moment=require("moment")
+router.post("/addbus",auth,async(req,res)=>{
+    try{
+        const created_on = moment(new Date());
+        const {
+            number_plate, model, year, capacity,
+          } = req.body;
+        // const check=await user.find({_id:req.payload._id})
+        var check=await user.findById(req.payload._id)
+        console.log(check.is_admin)
+        if(check.is_admin==="true"){
+        // const find=await bus.findOne({number_plate:number_plate})
+        // console.log(find.model)
+        // if(find._id===undefined){
+       
+        const data=await new bus({
+            number_plate:number_plate,
+            model:model,
+            year:year,
+            capacity:capacity,
+            created_on:created_on
+        })
+        data.save()
+        res.status(200).json({
+            status:"sucesss",
+            data:data
+        })}
+        // }}}
+        else{
+            res.status(404).json({
+                message:"you don't have a permission"
+            })
+        }
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({
+            error:err
+        })
+    }
+})
+
+router.get("/allbus",auth,async(req,res)=>{
+    try{
+        var check=await user.findById(req.payload._id)
+        console.log(check.is_admin)
+        if(check.is_admin==="no"){
+            res.status(404).json({
+                message:"you don'y have a permission"
+            })
+        }
+        const data=await bus.find({})
+        if(data){
+            res.status(200).json({
+                message:"success",
+                data:data
+            })
+        }
+        else{
+            res.status(401).json({
+                message:"no buses"
+            })
+        }
+
+    }
+    catch(err){
+        res.status(500).json({
+            error:err
+        })
+    }
+})
+module.exports=router;

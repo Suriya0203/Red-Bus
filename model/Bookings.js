@@ -30,48 +30,24 @@ const Bookings = mongoose.model('Bookings', {
         required : true, 
     }, 
     busId : {
-        type : String, 
+        type : mongoose.Types.ObjectId, 
         required : true, 
     }, 
     dateOfBooking : {
-        type : String, 
-        required : true, 
+        type : Date, 
+        // required : true, 
     }, 
-    departureDetails : {
-        from : {
-            type : String, 
-            required : true, 
-        },
-        to : {
-            type : String, 
-            required : true, 
-        }, 
-        date : {
-            type : String, 
-            required : true, 
-        }, 
-        time : {
-            type : String, 
-            required : true, 
-        }, 
-    }, 
-    returnDetails : {
-        from : {
-            type : String, 
-            required : true, 
-        },
-        to : {
-                type : String, 
-                required : true, 
-        }, 
-        date : {
-            type : String, 
-            required : true, 
-        }, 
-        time : {
-            type : String, 
-            required : true, 
-        }, 
+    tripId:{
+        type:mongoose.Types.ObjectId,
+        required:true
     },
+    seatNumber:{
+        type:String,
+        required:true
+    },
+    userId:{
+        type:mongoose.Types.ObjectId,
+        // required:true
+    }
 })
 module.exports = Bookings

@@ -2,7 +2,9 @@ var express = require("express")
 var app = express()
 const connectDB = require('./config/db')
 const authRoute = require("./routes/auth")
-
+const busroute=require("./routes/bus")
+const triproute=require("./routes/Trip")
+const Bookings=require("./routes/booking")
 require('dotenv').config();
 
 app.use(function(req, res, next){
@@ -16,13 +18,18 @@ app.use(function(req, res, next){
 
 app.use(express.static(__dirname))
 
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');    
+// const Bookings = require("./model/Bookings")
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb', extended:true}));
 
-
+app.get("/",(req,res)=>{
+    res.send("suriya")
+})
 app.use("/auth", (authRoute));
-
+app.use("/bus", (busroute));
+app.use("/trip", (triproute));
+app.use("/booking",(Bookings))
 app.listen(process.env.PORT,()=>{
     console.log("server is listening")
 })
