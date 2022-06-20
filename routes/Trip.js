@@ -94,15 +94,14 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
         // console.log(mongoose.Types.ObjectId.isValid(id));
         // ObjectId.fromString( id );
         const id = mongoose.Types.ObjectId(req.params.id.trim());
-        const data=trip.findById(id)
+        const data=await Bookings.findOne({_id:id})
         console.log(data)
         if(data){
-            // (await data).delete()
-            res.status(200).json({
-                message:"success",
-                // data:data
-            })
-        }
+        data.delete()
+        res.status(200).json({
+            message:"success"
+        })
+    }
         else{
             res.status(401).json({
                 message:"No trip in this id"
