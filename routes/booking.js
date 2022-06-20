@@ -15,7 +15,7 @@ router.post('/createbooking',auth,async(req,res)=>{
         //const fare=
         const find=await trip.findById(tripId)
         if(find){
-            const data = await Bookings.create(req.body)
+            const data = await Bookings.create(req.body)    
             data.created_on=created_on
             data.userId=req.payload._id  
             data.save()  
