@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Logo from '../images/logo.png'
+import {connect} from 'react-redux'
 import { useDispatch, useSelector } from 'react-redux';
 import './NavBar.css'
 import LoginImage from '../images/login.PNG' 
@@ -48,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const NavBar = () => {
+const NavBar = ({user}) => {
     const classes = useStyles();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {user} = useSelector((state) => state.user)
-    console.log(user)
+    // const {user} = useSelector((state) => state.user)
+    // // console.log(user)
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -65,7 +66,7 @@ const NavBar = () => {
             email, password
         }));
     }
-
+    // const user=null;
     const dispatch = useDispatch();
     return (
     <>
@@ -90,6 +91,21 @@ const NavBar = () => {
                         <a href="/">Show My Ticket</a>
                         <a href="/">Email</a>
                     </div>
+                    
+                </div>
+
+                <div className="dropdown">
+                    <a className="dropBtn" href="/">
+                        Manage Trip
+                    </a>
+                    <div className="drop-content">
+                        {/* <a href="/createtrip">Createtrip</a> */}
+                        <a href="/viewtrip">Viewtrip</a>
+                        <a href="/addbus">Addbus</a>
+                        <a href="/viewbus">Viewbus</a>
+                        <a href="/">Cancel</a>
+                    </div>
+                    
                 </div>
                 {  (user!==null) ?
                     (
@@ -188,4 +204,9 @@ const NavBar = () => {
   );
 }
 
-export default NavBar
+const mapStateToProps=state=>{
+    return {
+        user:state.auth.token
+    }
+  }
+export default connect(mapStateToProps)(NavBar)

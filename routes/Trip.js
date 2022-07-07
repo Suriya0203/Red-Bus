@@ -13,7 +13,7 @@ router.post('/createtrip',auth,async(req,res)=>{
             duration,Trip_date,fare
           } = req.body;
         // const check=await user.find({_id:req.payload._id})
-        var check=await user.findById(req.payload._id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="true"){
         // const find=await trip.find({number_plate:number_plate})
@@ -54,7 +54,7 @@ router.post('/createtrip',auth,async(req,res)=>{
 
 router.get("/alltrip",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.payload._id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
@@ -83,7 +83,7 @@ router.get("/alltrip",auth,async(req,res)=>{
 })
 router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.payload._id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
@@ -120,8 +120,8 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
 
 router.get("/filtertripbyorigin",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.payload._id)
-        console.log(check.is_admin)
+        var check=await user.findById(req.user.id)
+        // console.log(check.is_admin)
         // if(check.is_admin==="no"){
         //     res.status(404).json({
         //         message:"you don'y have a permission"
@@ -142,6 +142,7 @@ router.get("/filtertripbyorigin",auth,async(req,res)=>{
 
     }
     catch(err){
+        console.log(err)
         res.status(500).json({
             error:err
         })
@@ -150,7 +151,7 @@ router.get("/filtertripbyorigin",auth,async(req,res)=>{
 
 router.get("/filtertripbydestination",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.payload._id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         // if(check.is_admin==="no"){
         //     res.status(404).json({

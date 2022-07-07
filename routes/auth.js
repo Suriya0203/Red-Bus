@@ -2,75 +2,124 @@ const router = require("express").Router();
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const auth=require("../middleware/tokenValidation")
 const getAccess = require('../middleware/tokenValidation')
-
-
-router.post("/signup", async (req, res)=>{
-    try{
-        const Users = await User.findOne({'email' : req.body.email})
-        if(Users === null)
-        {
-            const salt = await bcrypt.genSalt(10);
-            await bcrypt.hash(req.body.password, salt, async (err, hashedPassword)=>{
-                if(err) {console.log(err)}
-                const newUser = await new User({
-                    name : req.body.name, 
-                    email : req.body.email, 
-                    password : hashedPassword,
-                    age : req.body.age, 
-                    gender : req.body.gender, 
-                    profileImg : req.body.profileImg
-                });
-                const user = await newUser.save();
-                res.status(200).json({
-                    "user" : user
-                })
-            })
-        }
-        else{
-            res.status(402).json({
-                message : "Already have an account"
-            })
-        }
-    }
-    catch(err)
-    {
-        console.log(err)
-        res.status(500).json({
-            message : err
-        });
-    }
+var jwtSecret = process.env.JWT_KEY
+const { check, validationResult } = require("express-validator");
+router.get("/", auth, async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id);
+		res.json(user);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send("Server Error");
+	}
 });
+router.post(
+	"/signin",
+	
+	async (req, res) => {
+        console.log(req.body.email)
+		// const errors = validationResult(req);
+		// console.log(errors)
+// 
+		// if (!errors.isEmpty()) {
+		// 	return res.status(400).json({ errors: errors.array() });
+		// }
+	
+		const { email, password } = req.body;
+		console.log("suriya")
+        console.log(email)
+		try {
+			// See if user exists
+			let user = await User.findOne({ email });
 
+			if (!user) {
+				return res
+					.status(401)
+					.json({ msg: "Invalid Credentials"});
+			}
 
-router.post("/signin", async (req, res)=>{
-    try{
-        const user = await User.findOne({email : req.body.email});
-        !user && res.status(404).json({
-            message : "User not found"
-        })
-        if(user !== null)
-        {
-            const validPassword = await bcrypt.compare(req.body.password, user.password)
-            !validPassword && res.status(400).json({
-                message : "Invalid Password"
-            })
-            if(validPassword !== false)
-            {
-                const token = jwt.sign({_id : user._id}, process.env.JWT_KEY, {expiresIn:"24h"});
-                const Users = await User.find({'email' : req.body.email})
-                if(Users!==null){
-                    return res.status(200).json({"token": token, "user" : Users})
-                }
-            }
-        }
-    }
-    catch(err)
-    {
-        console.log(err)
-        res.status(500).json(err);
-    }
-    
-})
+			const isMatch = await bcrypt.compare(password, user.password);
+			console.log(isMatch)
+			if (!isMatch) {
+				console.log(1234)
+				return res
+					.status(400)
+					.json({ msg: "Invalid Credentials"});
+			}
 
+			//Return jsonwebtoken
+			const payload = {
+				user: {
+					id: user.id,
+				},
+			};
+
+			jwt.sign(payload, jwtSecret, { expiresIn: "5 days" }, (err, token) => {
+				if (err) throw err;
+				res.json({ token });
+			});
+		} catch (err) {
+			console.error(err);
+			res.status(500).send("Server error");
+		}
+	}
+);
+router.post(
+	"/signup",
+	[
+		check("name", "Name is required").not().isEmpty(),
+		check("email", "Please include a valid email").isEmail(),
+		check(
+			"password",
+			"Please enter password with 6 or more characters"
+		).isLength({ min: 5 }),
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+
+		const { name, email, password,age,gender,profileImg } = req.body;
+
+		try {
+			// See if user exists
+			let user = await User.findOne({ email });
+
+			if (user) {
+				res.status(400).json({ errors: [{ msg: "User already exists" }] });
+			}
+			user = new User({
+				name,
+				email,
+				password,
+                age,gender,profileImg 
+			});
+
+			//Encrypt Password
+			const salt = await bcrypt.genSalt(10);
+
+			user.password = await bcrypt.hash(password, salt);
+
+			await user.save();
+
+			//Return jsonwebtoken
+			const payload = {
+				user: {
+					id: user.id,
+				},
+			};
+
+			jwt.sign(payload, jwtSecret, { expiresIn: 3 }, (err, token) => {
+				if (err) throw err;
+				res.json({ token });
+			});
+		} catch (err) {
+			console.error(err.message);
+			res.status(500).send("Server error");
+		}
+	}
+);
 module.exports = router;

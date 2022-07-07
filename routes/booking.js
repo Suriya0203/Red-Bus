@@ -17,7 +17,7 @@ router.post('/createbooking',auth,async(req,res)=>{
         if(find){
             const data = await Bookings.create(req.body)    
             data.created_on=created_on
-            data.userId=req.payload._id  
+            data.userId=req.user.id 
             data.save()  
             res.status(200).json({
                 data:data
@@ -36,7 +36,7 @@ router.post('/createbooking',auth,async(req,res)=>{
 })
 router.get("/allbookings",auth,async(req,res)=>{
     try{
-        const data = await Bookings.find({userId:req.payload._id})
+        const data = await Bookings.find({userId:req.user.id})
         if(data){
         res.status(200).json({
             message:"successs",
@@ -66,7 +66,7 @@ router.delete("/deletebooking/:id",auth,async(req,res)=>{
     console.log(data)
     
     if(data){
-        if(data.userId.toString()===req.payload._id.toString()){
+        if(data.userId.toString()===req.user.id.toString()){
     data.delete()
     res.status(200).json({
         message:"success"

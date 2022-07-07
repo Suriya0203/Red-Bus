@@ -4,13 +4,16 @@ const user=require("../model/User")
 const auth=require("../middleware/tokenValidation")
 const moment=require("moment")
 router.post("/addbus",auth,async(req,res)=>{
+    console.log("suriya")
     try{
         const created_on = moment(new Date());
         const {
             number_plate, model, year, capacity,
           } = req.body;
+
+        console.log(req.body.NumberPlate)
         // const check=await user.find({_id:req.payload._id})
-        var check=await user.findById(req.payload._id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="true"){
         // const find=await bus.findOne({number_plate:number_plate})
@@ -46,7 +49,7 @@ router.post("/addbus",auth,async(req,res)=>{
 
 router.get("/allbus",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.payload._id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({

@@ -6,7 +6,9 @@ const busroute=require("./routes/bus")
 const triproute=require("./routes/Trip")
 const Bookings=require("./routes/booking")
 require('dotenv').config();
+var cors = require('cors')
 
+app.use(cors())
 app.use(function(req, res, next){
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -30,6 +32,7 @@ app.use("/auth", (authRoute));
 app.use("/bus", (busroute));
 app.use("/trip", (triproute));
 app.use("/booking",(Bookings))
+
 app.listen(process.env.PORT,()=>{
     console.log("server is listening")
 })

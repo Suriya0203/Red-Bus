@@ -3,25 +3,38 @@ import {
     LOGIN_SUCCESS, 
     LOGOUT,
     REGISTER_SUCCESS, 
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    ADD_BUS_SUCCESSFULL,
+    USER_LOADED
 } from "../actions/type";
 
-const user = JSON.parse(localStorage.getItem("user"));
-const initialState = user 
-    ? { error : false, loggedIn: true, user : [] }
-    : { error : false, loggedIn : false, user : null };
+// const user = JSON.parse(localStorage.getItem("user"));
+const initialState = {
+	token: localStorage.getItem("token"),
+	isAuthenticated: false,
+	loading: true,
+	user: null,
+};
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
     switch(type) {
+        case USER_LOADED:
+			return {
+				...state,
+				isAuthenticated: true,
+				loading: false,
+				user:payload
+			};
         case LOGIN_SUCCESS:
-            localStorage.setItem("user", JSON.stringify(payload.user))
-            return {
-                ...state, 
-                loggedIn : true, 
-                error : false, 
-                user : payload.user, 
-            }
+            localStorage.setItem("token", payload.token);
+			
+			return {
+				...state,
+				...payload,
+				isAuthenticated: true,
+				loading: false,
+			};
         case LOGIN_FAIL: 
             return {
                 ...state, 
@@ -50,6 +63,26 @@ export default function (state = initialState, action) {
                 error : true, 
                 user : null, 
             }
+        case ADD_BUS_SUCCESSFULL:
+                // localStorage.setItem("user", JSON.stringify(payload.user))
+                alert("Bus added successfully")
+                window.location.reload(false)
+                return {
+                    ...state, 
+                    loggedIn : true, 
+                    error : false, 
+                    // user : payload.user,
+                    bus:payload.data 
+                }
+        case ADD_BUS_SUCCESSFULL:
+                    // localStorage.setItem("user", JSON.stringify(payload.user))
+                    return {
+                        ...state, 
+                        loggedIn : true, 
+                        error : false, 
+                        // user : payload.user,
+                        bus:null
+                    }
         default : 
             return state; 
     }

@@ -1,26 +1,22 @@
 const jwt = require("jsonwebtoken");
-const User = require("../model/User");
 
-module.exports = function (req, res, next){
-    try{
-            if(!req.headers['authorization'])
-            {
-                return res.json("Unauthorized user");
-            }
-            const authHeader = req.headers['authorization']
-            const bearerToken = authHeader.split(' ')
-            const token = bearerToken[1]
-            jwt.verify(token, process.env.JWT_KEY, async (err, payload)=>{
-                if(err){
-                    return res.json("Unauthorized user");
-                }
-                req.payload = payload
-                
-                next()
-                console.log(req.payload._id,123)
-             })
-        
-    }catch(err){
-        res.status(400).json("Invalid Token")
-    }
-}
+var jwtSecret = "mysecrettoken";
+
+module.exports = function (req, res, next) {
+	try {
+    const token = req.header("x-auth-token");
+    console.log(token)
+	if (!token) {
+		return res.status(401).json({ msg: "No token, authorization denied" });
+	}
+	
+		const decoded = jwt.verify(token, process.env.JWT_KEY);
+		req.user = decoded.user;
+        console.log(req.user.id)
+		// console.log(req.user.id)
+		next();
+	} catch (err) {
+        console.log(err)
+		res.status(401).json({ msg: "Token is not valid" });
+	}
+};
