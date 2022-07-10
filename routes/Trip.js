@@ -7,7 +7,6 @@ const trip=require("../model/Trip")
 const mongoose=require("mongoose")
 router.post('/createtrip',auth,async(req,res)=>{
     try{
-        console.log("suriya")
         const created_on = moment(new Date());
         const {
             operatorName, busId, departureTime, departureLocation,arrivalLocation,
@@ -23,8 +22,6 @@ router.post('/createtrip',auth,async(req,res)=>{
         //         message:"bus already excist"
         //     })
         // }
-        // const bus_data=await bus.findById(busId)
-        // console.log(bus_data)
         const data=await new trip({
             operatorName:operatorName,
             busId:busId,

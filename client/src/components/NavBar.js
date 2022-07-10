@@ -49,17 +49,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const NavBar = ({user,type}) => {
+const NavBar = ({user}) => {
     const classes = useStyles();
-    console.log(type)
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     // const {user} = useSelector((state) => state.user)
     // // console.log(user)
-    if(type){
-        console.log(type.is_admin)
-    }
+
     const handleSubmit = (e) =>{
         e.preventDefault();
         console.log(email, password)
@@ -95,11 +93,8 @@ const NavBar = ({user,type}) => {
                     </div>
                     
                 </div>
-                <div>
-                {(
-                    type!==null && type.is_admin==="true")?
-                (
-                    <div className="dropdown">
+
+                <div className="dropdown">
                     <a className="dropBtn" href="/">
                         Manage Trip
                     </a>
@@ -112,11 +107,6 @@ const NavBar = ({user,type}) => {
                     </div>
                     
                 </div>
-                ):(
-                  <></>  
-                )}</div>
-
-
                 {  (user!==null) ?
                     (
                         <a href="">Logout</a>
@@ -216,8 +206,7 @@ const NavBar = ({user,type}) => {
 
 const mapStateToProps=state=>{
     return {
-        user:state.auth.token,
-        type:state.auth.user
+        user:state.auth.token
     }
   }
 export default connect(mapStateToProps)(NavBar)
