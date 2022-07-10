@@ -15,7 +15,11 @@ import {
     ADD_ADMIN_SUCCESSFULL,
     ADD_ADMIN_FAILURE,
     PASSWORD_CHANGED_FAILURE,
-    PASSWORD_CHANGED_SUCCESSFULLY
+    PASSWORD_CHANGED_SUCCESSFULLY, 
+    GET_TRIP_FAILURE,
+    GET_TRIP_SUCCESSS,
+    GET_BUS_SUCCESSS,
+    GET_BUS_FAILURE
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -255,3 +259,60 @@ async (dispatch) => {
 		});
 	}
 };
+
+export const getTrip = (formData) => async(dispatch) => {
+    console.log("hai")
+    try{
+        console.log(formData)
+        const res = await axios.post("http://localhost:5000/trip/getTrip", formData)
+        console.log(res)
+        dispatch({
+            type : GET_TRIP_SUCCESSS, 
+            payload : res.data
+        })
+    }
+    catch(err)
+    {
+        console.log(err);
+        dispatch({
+            type : GET_TRIP_FAILURE
+        })
+    }
+}
+
+export const getTripById = (id) => async(dispatch) => {
+    console.log("hai")
+    try{
+        console.log(id)
+        const res = await axios.post("http://localhost:5000/trip/getTripById", {'id' : id})
+        console.log(res)
+        dispatch({
+            type : GET_TRIP_SUCCESSS, 
+            payload : res.data
+        })
+    }
+    catch(err)
+    {
+        console.log(err);
+        dispatch({
+            type : GET_TRIP_FAILURE
+        })
+    }
+}
+
+export const getBusById = (id) => async(dispatch) => {
+    try {
+        const res = await axios.post("http://localhost:5000/bus/getBusById", {'id' : id})
+        console.log(res)
+        dispatch({
+            type: GET_BUS_SUCCESSS, 
+            payload : res.data
+        })
+    }
+    catch(err) {
+        console.log(err);
+        dispatch({
+            type : GET_BUS_FAILURE
+        })
+    }
+}
