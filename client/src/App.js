@@ -16,6 +16,8 @@ import Createtrip from './components/Createtrip'
 import Viewtrip from "./components/Viewtrip";
 import Addadmin from "./components/Addadmin";
 import ChangePassword from "./components/Changepassword"
+import Search from "./components/Search";
+import ViewSeats from "./components/ViewSeats";
 if (localStorage.token) {
 
 	setAuthToken(localStorage.token);
@@ -65,6 +67,14 @@ const App = ({user}) => {
                       path = '/changepassword'
                       element = { <ChangePassword /> }
                   />
+                  <Route 
+                        path= '/searchTrip/:id1/:id2/:id3'
+                        element = { <Search /> }
+                    />
+                   <Route
+                        path = '/searchTrip/viewSeats/:id1/:id2' 
+                        element = { <ViewSeats /> }
+                    />
               </Routes>
           </BrowserRouter>
       </div>
