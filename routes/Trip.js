@@ -183,4 +183,56 @@ router.get("/filtertripbydestination",auth,async(req,res)=>{
     }
 })
 
+
+router.post('/getTrip', auth, async(req, res) => {
+    console.log(req.body)
+    try{
+        var data = await trip.find({
+            departureLocation : req.body.source, 
+            arrivalLocation : req.body.destination
+        })
+        console.log(data);
+        if(data) {
+            res.status(200).json({
+                message : "success", 
+                data : data
+            })
+        }
+        else{
+            res.status(401).json({
+                message:"no trips"
+            })
+        }
+    }
+    catch(err){
+        res.status(500).json({
+            error:err
+        })
+    }
+})
+
+router.post('/getTripById', auth, async(req, res) => {
+    console.log("hello", req.body)
+    try{
+        var data = await trip.findById(req.body.id)
+        console.log(data);
+        if(data) {
+            res.status(200).json({
+                message : "success", 
+                data : data
+            })
+        }
+        else{
+            res.status(401).json({
+                message:"no trips"
+            })
+        }
+    }
+    catch(err){
+        res.status(500).json({
+            error:err
+        })
+    }
+})
+
 module.exports=router;
