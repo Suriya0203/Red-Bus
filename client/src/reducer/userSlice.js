@@ -5,7 +5,10 @@ import {
     REGISTER_SUCCESS, 
     REGISTER_FAIL,
     ADD_BUS_SUCCESSFULL,
-    USER_LOADED
+    USER_LOADED,
+    ADD_ADMIN_SUCCESSFULL,
+    ADD_BUS_FAILURE,
+    PASSWORD_CHANGED_SUCCESSFULLY
 } from "../actions/type";
 
 // const user = JSON.parse(localStorage.getItem("user"));
@@ -35,6 +38,10 @@ export default function (state = initialState, action) {
 				isAuthenticated: true,
 				loading: false,
 			};
+            case ADD_ADMIN_SUCCESSFULL:
+                // localStorage.setItem("token", payload.token);
+                alert("Admin added successfully")  
+              
         case LOGIN_FAIL: 
             return {
                 ...state, 
@@ -74,7 +81,9 @@ export default function (state = initialState, action) {
                     // user : payload.user,
                     bus:payload.data 
                 }
-        case ADD_BUS_SUCCESSFULL:
+        case PASSWORD_CHANGED_SUCCESSFULLY:
+                    alert("Passowrd changed successfully")	
+        case ADD_BUS_FAILURE:
                     // localStorage.setItem("user", JSON.stringify(payload.user))
                     return {
                         ...state, 

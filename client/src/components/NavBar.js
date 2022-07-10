@@ -109,6 +109,7 @@ const NavBar = ({user,type}) => {
                         <a href="/viewtrip">Viewtrip</a>
                         <a href="/addbus">Addbus</a>
                         <a href="/viewbus">Viewbus</a>
+                        <a href="/addadmin">Addadmin</a>
                         <a href="/">Cancel</a>
                     </div>
                     

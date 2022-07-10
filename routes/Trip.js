@@ -7,6 +7,7 @@ const trip=require("../model/Trip")
 const mongoose=require("mongoose")
 router.post('/createtrip',auth,async(req,res)=>{
     try{
+        console.log("suriya")
         const created_on = moment(new Date());
         const {
             operatorName, busId, departureTime, departureLocation,arrivalLocation,
@@ -17,6 +18,8 @@ router.post('/createtrip',auth,async(req,res)=>{
         console.log(check.is_admin)
         if(check.is_admin==="true"){
         // const find=await trip.find({number_plate:number_plate})
+        const find=await trip.find({busId:busId})
+        console.log(find)
         // if(find){
         //     res.status(401).json({
         //         message:"bus already excist"
@@ -46,6 +49,7 @@ router.post('/createtrip',auth,async(req,res)=>{
         }
     }
     catch(err){
+        console.log(err)
         res.status(500).json({
             erroe:err
         })

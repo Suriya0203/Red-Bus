@@ -11,7 +11,11 @@ import {
     CREATE_TRIP_SUCCESSFULL,
     CREATE_TRIP_FAILURE,
     VIEW_TRIP_SUCCESSS,
-    VIEW_TRIP_FAILURE
+    VIEW_TRIP_FAILURE,
+    ADD_ADMIN_SUCCESSFULL,
+    ADD_ADMIN_FAILURE,
+    PASSWORD_CHANGED_FAILURE,
+    PASSWORD_CHANGED_SUCCESSFULLY
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -135,7 +139,7 @@ async (dispatch) => {
         // };
         
 		const res = await axios.post(
-			"http://localhost:5000/bus/createtrip" ,
+			"http://localhost:5000/trip/createtrip" ,
 			formData,
 		);
 
@@ -180,3 +184,74 @@ export const fetchTrip =()=>async(dispatch)=>{
     }
 }
 
+////
+
+export const Addadmin_action =
+( formData) =>
+async (dispatch) => {
+	// console.log(id,"kavin")
+	console.log("suriya prakash")
+    console.log(formData)
+	try {
+        // const config = {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        // };
+        
+		const res = await axios.post(
+			"http://localhost:5000/auth/signup" ,
+			formData,
+		);
+
+		dispatch({
+			type: ADD_ADMIN_SUCCESSFULL,
+			payload: res.data,
+		});
+
+
+	} catch (err) {
+
+		
+		console.log(err)
+		
+
+		dispatch({
+			type: ADD_ADMIN_FAILURE,
+			payload:err
+		});
+	}
+};
+
+
+////
+
+export const ChangePassword_action =
+( formData) =>
+async (dispatch) => {
+	// console.log(id,"kavin")
+	console.log("suriya prakash")
+	try {
+		const res = await axios.post(
+			`http://localhost:5000/auth/changepassword`,
+			formData
+		);
+
+		dispatch({
+			type: PASSWORD_CHANGED_SUCCESSFULLY,
+			payload: res.data,
+		});
+
+
+	} catch (err) {
+
+		
+		console.log(err)
+		
+
+		dispatch({
+			type: PASSWORD_CHANGED_FAILURE,
+			payload:err
+		});
+	}
+};

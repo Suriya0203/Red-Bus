@@ -14,6 +14,8 @@ import {connect} from 'react-redux'
 import Viewbus from './components/Viewallbus'
 import Createtrip from './components/Createtrip'
 import Viewtrip from "./components/Viewtrip";
+import Addadmin from "./components/Addadmin";
+import ChangePassword from "./components/Changepassword"
 if (localStorage.token) {
 
 	setAuthToken(localStorage.token);
@@ -54,6 +56,14 @@ const App = ({user}) => {
                    <Route 
                       path = '/viewtrip'
                       element = { <Viewtrip /> }
+                  />
+                   <Route 
+                      path = '/addadmin'
+                      element = { <Addadmin /> }
+                  />
+                   <Route 
+                      path = '/changepassword'
+                      element = { <ChangePassword /> }
                   />
               </Routes>
           </BrowserRouter>

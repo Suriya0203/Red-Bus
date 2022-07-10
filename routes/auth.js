@@ -82,7 +82,7 @@ router.post(
 			return res.status(400).json({ errors: errors.array() });
 		}
 
-		const { name, email, password,age,gender,profileImg } = req.body;
+		const { name, email, password,age,gender,is_admin } = req.body;
 
 		try {
 			// See if user exists
@@ -95,7 +95,8 @@ router.post(
 				name,
 				email,
 				password,
-                age,gender,profileImg 
+                age,gender,
+				is_admin
 			});
 
 			//Encrypt Password
@@ -117,9 +118,41 @@ router.post(
 				res.json({ token });
 			});
 		} catch (err) {
-			console.error(err.message);
+			console.log(err)
 			res.status(500).send("Server error");
 		}
 	}
 );
+router.post("/changepassword",auth,async (req,res)=>{
+	try{
+		const user=await User.findById(req.user.id)
+		const isMatch = await bcrypt.compare(req.body.CurrentPassword, user.password);
+		if(isMatch){
+				//Encrypt Passwordconsole
+				console.log("suriya")
+
+				const salt = await bcrypt.genSalt(10);
+
+				Newpassword = await bcrypt.hash(req.body.NewPassword, salt);
+			console.log(Newpassword)
+			var data=await User.findByIdAndUpdate(req.user.id,{
+				$set:{password:Newpassword}
+			  })
+			  console.log(data)
+			  res.json({
+				  data:data	
+			  })
+			
+		}
+		else{
+			res.json({
+				message:"password doesn't match"
+			})
+		}
+	}catch(err){
+		res.json({
+			error:err
+		})
+	}
+})
 module.exports = router;

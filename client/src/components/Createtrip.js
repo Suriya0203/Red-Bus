@@ -7,11 +7,14 @@ import { Createtrip_action} from "../actions/auth";
 import { connect } from "react-redux";
 // import NavBar from  './NavBar'
 function Createtrip({Createtrip_action}){
-  
+  console.log("suriya")
   // console.log(id)
+      const params = useParams();
+    const id=params.id
+    console.log(id)
     const [formData, setFormData] = useState({
         operatorName: "",
-        busId: "",
+        busId: id,
         departureLocation:"",
         departureTime:"",
         arrivalLocation:"",
@@ -27,11 +30,10 @@ function Createtrip({Createtrip_action}){
     setFormData({ ...formData, [e.target.name]: e.target.value });
    
   const onSubmit = async (e) => {
-    console.log(formData)
-    const params = useParams();
-  const id=params.id
-		console.log("suriya")
-    setFormData({ ...formData, [busId]:id });
+    // console.log(formData)
+
+		// console.log("suriya")
+    // setFormData({ ...formData, [busId]:id });
 		e.preventDefault();
 		Createtrip_action(formData)
 	
@@ -87,7 +89,7 @@ function Createtrip({Createtrip_action}){
   <input type="number" id="fare" name="fare"
    value={fare}required
    onChange={(e) => onChange(e)}
-    placeholder="Enetr fare.."/> 
+    placeholder="Enter fare.."/> 
 
 
   
