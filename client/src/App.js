@@ -18,6 +18,7 @@ import Addadmin from "./components/Addadmin";
 import ChangePassword from "./components/Changepassword"
 import Search from "./components/Search";
 import ViewSeats from "./components/ViewSeats";
+import BookingDetails from "./components/BookingDetails";
 if (localStorage.token) {
 
 	setAuthToken(localStorage.token);
@@ -75,6 +76,10 @@ const App = ({user}) => {
                         path = '/searchTrip/viewSeats/:id1/:id2' 
                         element = { <ViewSeats /> }
                     />
+                    <Route 
+                      path = '/bookingdetails/:id'
+                      element = { <BookingDetails /> }
+                  />
               </Routes>
           </BrowserRouter>
       </div>

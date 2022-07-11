@@ -54,6 +54,7 @@ router.get("/allbookings",auth,async(req,res)=>{
         })
     }
 })
+
 router.delete("/deletebooking/:id",auth,async(req,res)=>{
     // const id=req.params.id.toString()
     // var Schema = mongoose.Schema;
@@ -111,6 +112,32 @@ router.put('/updatebooking/:id',auth,async(req,res)=>{
     catch(err){
         console.log(err)
         res.status(500).json({
+            error:err
+        })
+    }
+})
+
+///
+
+router.get("/getbookings/:id",auth,async(req,res)=>{
+    try{
+        console.log("suriya")
+        const data = await Bookings.find({tripId:req.params.id})
+        console.log(data)
+        
+        if(data){
+        res.status(200).json({
+            message:"successs",
+            data:data
+        })}
+        else{
+            res.status(401).json({
+                message:"no booking in this ID"
+            })
+        }
+    }
+    catch(err){
+        res.send(500).json({
             error:err
         })
     }

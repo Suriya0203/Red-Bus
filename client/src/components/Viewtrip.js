@@ -59,7 +59,7 @@ function Viewtrip({bus,fetchTrip}) {
       <CardActions>
         <Button size="small" variant="contained" href={`createtrip/${contact._id}`}>VIEW SEATS</Button>
         {/* <Button size="small">Learn More</Button> */}
-        <Button size="small" variant="contained" href={`/`}>BOOKING DETAILS</Button>
+        <Button size="small" variant="contained" href={`/bookingdetails/${contact._id}`}>BOOKING DETAILS</Button>
       </CardActions>
     </Card>
     

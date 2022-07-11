@@ -19,7 +19,9 @@ import {
     GET_TRIP_FAILURE,
     GET_TRIP_SUCCESSS,
     GET_BUS_SUCCESSS,
-    GET_BUS_FAILURE
+    GET_BUS_FAILURE,
+    GET_BOOKING_SUCCESS,
+    GET_BOOKING_FAILURE
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -313,6 +315,26 @@ export const getBusById = (id) => async(dispatch) => {
         console.log(err);
         dispatch({
             type : GET_BUS_FAILURE
+        })
+    }
+}
+
+///
+
+export const getBooking = (id) => async(dispatch) => {
+    try {
+        console.log("suriya")
+        const res = await axios.get(`http://localhost:5000/booking/getbookings/${id}`)
+        console.log(res)
+        dispatch({
+            type: GET_BOOKING_SUCCESS, 
+            payload : res.data
+        })
+    }
+    catch(err) {
+        console.log(err);
+        dispatch({
+            type : GET_BOOKING_FAILURE
         })
     }
 }
