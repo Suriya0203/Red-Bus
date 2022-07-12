@@ -6,16 +6,52 @@ const trip=require("../model/Trip")
 const moment=require("moment");
 const Bookings = require("../model/Bookings");
 var mongoose = require('mongoose');
+
 router.post('/createbooking',auth,async(req,res)=>{
+    console.log(req.body)
     try{
         const created_on = moment(new Date());
         const {
-            tripId, busId, name, age,gender,seatNumber,
-          } = req.body;
+            passengerDetails, email, phoneNumber, tripId, fare, busId, seatNumber,
+          } = req.body.email;
         //const fare=
         const find=await trip.findById(tripId)
+        console.log(find);
         if(find){
-            const data = await Bookings.create(req.body)    
+            var seats = [];
+            for(var i=0; i<find.bookedSeats; i++)
+            {
+                seats.push(find.bookedSeats[i])
+            }
+            for(var i =0; i<seatNumber.length; i++)
+            {
+                seats.push(seatNumber[i]);
+            }
+            console.log("seats", seats);
+
+            var delSeats = [];
+            for(var i=0; i< find.availableSeats.length; i++)
+            {
+                delSeats.push(find.availableSeats[i])
+            }
+            console.log("delSeats", delSeats)
+
+            for(var i=0; i<seatNumber.length; i++)
+            {
+                const index = delSeats.indexOf(parseInt(seatNumber[i]));
+                if(index > -1)
+                {
+                    delSeats.splice(index, 1)
+                }
+            }
+            console.log("delSeats", delSeats)
+            const val = await trip.findOneAndUpdate({'_id' : tripId}, 
+                {bookedSeats : seats})
+
+            const val2 = await trip.findOneAndUpdate({'_id' : tripId}, 
+                {availableSeats : delSeats})
+            
+            const data = await Bookings.create(req.body.email)    
             data.created_on=created_on
             data.userId=req.user.id 
             data.save()  
@@ -34,6 +70,8 @@ router.post('/createbooking',auth,async(req,res)=>{
         res.json(500).json(err)
     }
 })
+
+
 router.get("/allbookings",auth,async(req,res)=>{
     try{
         const data = await Bookings.find({userId:req.user.id})
