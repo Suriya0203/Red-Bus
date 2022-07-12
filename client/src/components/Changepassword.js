@@ -48,11 +48,7 @@ const ChangePassword = ({ChangePassword_action}) => {
 						value={CurrentPassword}
 						onChange={(e) => onChange(e)}
 						required
-						style={{
-							border: "0",
-							borderBottom: "2px solid black",
-							outline: "0"
-						}}
+					
 					/>
 				</div>
 				<div className="form-group">
@@ -64,11 +60,7 @@ const ChangePassword = ({ChangePassword_action}) => {
 						value={NewPassword}
 						onChange={(e) => onChange(e)}
 						required
-						style={{
-							border: "0",
-							borderBottom: "2px solid black",
-							outline: "0"
-						}}
+						
 					/>
 				</div>
 				<div className="form-group">
@@ -80,11 +72,7 @@ const ChangePassword = ({ChangePassword_action}) => {
 						value={ReEnterPassword}
 						onChange={(e) => onChange(e)}
 						required
-						style={{
-							border: "0",
-							borderBottom: "2px solid black",
-							outline: "0"
-						}}
+						
 					/>
 				</div><br/>
 				<input type="submit" className="bttttn" value="Submit" />

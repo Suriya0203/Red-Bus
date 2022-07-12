@@ -7,7 +7,6 @@ import { IoSwapHorizontal } from 'react-icons/io5';
 import { getTrip} from "../actions/auth";
 import { GET_TRIP_FAILURE, GET_TRIP_SUCCESSS } from '../actions/type'
 import { makeStyles } from '@material-ui/core' 
-
 const useStyles = makeStyles((theme) => ({
     box : {
         width: '75%', 

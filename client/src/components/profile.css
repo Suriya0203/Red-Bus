@@ -1,0 +1,54 @@
+input[type=text],[type= email],[type= password]{
+    border: none;
+  
+    background-color: whitesmoke;
+  }
+  .form input {
+      width: 50%;
+      padding: 10px;
+      margin: 10px;
+    
+  
+  }
+  .bttttn {
+      width: 52%;
+      padding: 10px;
+      margin: 10px;
+      background: #08b883;
+      color: #fff;
+      outline: none;
+      border: none;
+      border-radius: 20px;
+      font-size: 18px;
+      cursor: pointer;
+  }
+  
+  .bttttn:hover {
+      background: transparent;
+      border: 2px solid #6cafa4;
+      color: #6cafa4;
+  }
+  .lead {
+      font-size: 25px;
+  }
+  
+  .heading {
+      font-size: 40px;
+  }
+  
+  .link a {
+      color: #6cafa4;
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid transparent;
+    border-radius: .25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+}

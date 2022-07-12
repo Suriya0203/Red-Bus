@@ -21,7 +21,9 @@ import {
     GET_BUS_SUCCESSS,
     GET_BUS_FAILURE,
     GET_BOOKING_SUCCESS,
-    GET_BOOKING_FAILURE
+    GET_BOOKING_FAILURE,
+    PROFILE_UPDATED_SUCCESSFULLY,
+    PROFILE_UPDATED_ERROR
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -338,3 +340,39 @@ export const getBooking = (id) => async(dispatch) => {
         })
     }
 }
+
+///
+export const profile =
+	({ name, email, phone }) =>
+	async (dispatch) => {
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const body = JSON.stringify({ name, email, phone });
+
+		try {
+			const res = await axios.post(
+				"http://localhost:5000/editprofile2",
+				body,
+				config
+			);
+
+			dispatch({
+				type: PROFILE_UPDATED_SUCCESSFULLY,
+				payload: res.data,
+			});
+
+		} catch (err) {
+
+			
+            console.log(err)
+            
+
+			dispatch({
+				type: PROFILE_UPDATED_ERROR,
+			});
+		}
+	};

@@ -11,14 +11,20 @@ import Home from './components/Home';
 import TermsAndCondition from './components/TermsAndCondition';
 import Addbus from './components/Addbus';
 import {connect} from 'react-redux'
-import Viewbus from './components/Viewallbus'
+// import Viewbus from './components/Viewallbus'
 import Createtrip from './components/Createtrip'
-import Viewtrip from "./components/Viewtrip";
+// import Viewtrip from "./components/Viewtrip";
 import Addadmin from "./components/Addadmin";
 import ChangePassword from "./components/Changepassword"
 import Search from "./components/Search";
 import ViewSeats from "./components/ViewSeats";
 import BookingDetails from "./components/BookingDetails";
+import Profile from './components/Profile'
+import Viewtripcheck from './components/Viewtrip'
+// import viewbus2 from "./components/viewbus2";
+import Viewbus2 from "./components/viewbus2";
+import Viewtrip from "./components/Viewtrip";
+// import profile_page from './components/profile2'
 if (localStorage.token) {
 
 	setAuthToken(localStorage.token);
@@ -46,7 +52,7 @@ const App = ({user}) => {
                   />
                    <Route 
                       path = '/viewbus'
-                      element = { <Viewbus /> }
+                      element = { <Viewbus2 /> }
                   />
                   <Route 
                       path = '/createtrip/:id'
@@ -79,6 +85,18 @@ const App = ({user}) => {
                     <Route 
                       path = '/bookingdetails/:id'
                       element = { <BookingDetails /> }
+                  />
+                  <Route 
+                      path = '/profile'
+                      element = { <Profile /> }
+                  />
+                   <Route 
+                      path = '/check'
+                      element = { <Viewtripcheck /> }
+                  />
+                   <Route 
+                      path = '/check2'
+                      element = { <Viewbus2 /> }
                   />
               </Routes>
           </BrowserRouter>

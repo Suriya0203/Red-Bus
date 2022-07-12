@@ -7,7 +7,8 @@ import LoginImage from '../images/login.PNG'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { GoogleLogin } from 'react-google-login';
-
+import PersonIcon from '@mui/icons-material/Person';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {
     Button,
     makeStyles, TextField 
@@ -72,21 +73,34 @@ const NavBar = ({user,type}) => {
     const dispatch = useDispatch();
     return (
     <>
-        <div className="navbar">
+        <div className="navbar" style={{ backgroundColor:"#e04c54",height:"75px"}}>
             <div className="nav-header">
                 <div className="nav-logo">
-                    <div>
-                        <img src = {Logo} className="logo"/>
+                    <div style={{position:"relative",bottom:"7px",right:"100px"}}>
+                        <a href='/'>
+                        <img src = "https://play-lh.googleusercontent.com/5ZxVI65M9_yQQHgsY2f_lvSFD9E4Oqvfgxkg-E-MZwWt1M65-6HLY3twREAubQtZqqo" className="logo"/></a>
                     </div>
                 </div>
             </div>
 
             <div className="nav-links">
               
-                <a href="/Help">Help</a>
+                <a style={{
+                            position:"relative",
+                            left:"20%",
+                            bottom:"20px",
+                            color:"white"
+                        }}href="/Help">Help</a>
                 
-                <div className="dropdown">
-                    <a className="dropBtn" href="/">
+                <div className="dropdown"style={{
+                            position:"relative",
+                            left:"20%",
+                            bottom:"20px",
+                            color:"white"
+                        }}>
+                    <a className="dropBtn"style={{
+                        color:"white"
+                    }}  href="/">
                         Manage Booking
                     </a>
                     <div className="drop-content">
@@ -100,8 +114,15 @@ const NavBar = ({user,type}) => {
                 {(
                     type!==null && type.is_admin==="true")?
                 (
-                    <div className="dropdown">
-                    <a className="dropBtn" href="/">
+                    <div className="dropdown"style={{
+                        position:"relative",
+                        left:"20%",
+                        bottom:"20px",
+                        color:"white"
+                    }}>
+                    <a  style={{
+                        color:"white"
+                    }} className="dropBtn" href="/">
                         Manage Trip
                     </a>
                     <div className="drop-content">
@@ -112,8 +133,7 @@ const NavBar = ({user,type}) => {
                         <a href="/addadmin">Addadmin</a>
                         <a href="/">Cancel</a>
                     </div>
-                    
-                </div>
+                    </div>
                 ):(
               <></> 
                 )}
@@ -121,7 +141,28 @@ const NavBar = ({user,type}) => {
 
                 {  (user!==null) ?
                     (
-                        <a href="">Logout</a>
+                        <div className="dropdown" style={{
+                            position:"relative",
+                            left:"15%",
+                            color:"white",
+                            bottom:"4px"
+                        }}>
+                        <a className="dropBtn" href="/">
+                        <AccountCircleIcon style={{fontSize: '250%',color:"white"}}/>
+                        {/* <img style={{
+                            width:"70px"
+                            ,height:"70px"
+                        }} class="ui avatar image" src="https://i.pinimg.com/originals/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"/> */}
+                        </a>
+                        <div className="drop-content">
+                            {/* <a href="/createtrip">Createtrip</a> */}
+                            <a href="/profile">Profile</a>
+                            <a href="/mytrip">Mytrip</a>
+                            <a href="/changepassword">Password</a>
+                            <a href="/logout">Logout</a>
+                            
+                        </div>
+                        </div>
                     )
                     : 
                     (

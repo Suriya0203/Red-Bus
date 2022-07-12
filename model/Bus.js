@@ -19,6 +19,9 @@ const Bus = mongoose.model('Bus', {
     },
     created_on:{
         type:Date
+    },
+    rating:{
+        type:String
     }
 })
 module.exports = Bus

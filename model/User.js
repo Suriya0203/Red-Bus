@@ -21,6 +21,9 @@ const User = mongoose.model('User', {
         type : String, 
         required : true, 
     }, 
+    phonenum:{
+        type:String
+    },
     profileImg : {
         type : String, 
         required : true,

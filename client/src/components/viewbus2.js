@@ -7,8 +7,8 @@ import { IoSwapHorizontal } from 'react-icons/io5';
 import { getTrip} from "../actions/auth";
 import { GET_TRIP_FAILURE, GET_TRIP_SUCCESSS } from '../actions/type'
 import { makeStyles } from '@material-ui/core' 
-import { fetchTrip } from '../actions/auth'
-import NavBar from './NavBar'
+import { fetchBuses  } from '../actions/auth'
+import NavBar from '../components/NavBar'
 const useStyles = makeStyles((theme) => ({
     box : {
         width: '75%', 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }, 
 }));
 
-function Viewtrip ({trip, fetchTrip}) {
+function Viewbus ({bus,fetchBuses}) {
     const classes = useStyles();
     const val = useParams();
 
@@ -31,16 +31,16 @@ function Viewtrip ({trip, fetchTrip}) {
     
     useEffect(()=>{
         
-        fetchTrip()
+        fetchBuses()
     }, []) 
 
-    console.log(trip)
-    if(trip) {
+    // console.log(trip)
+    if(bus) {
         return (
                 <div>
                     <NavBar/><br/><br/><br/>
                     <div>
-                    {trip.map((index) => {
+                    {bus.map((index) => {
                             console.log(index._id)
                             return (
                                 <div key = {index._id} >
@@ -48,27 +48,19 @@ function Viewtrip ({trip, fetchTrip}) {
                                     <div className={classes.boxValue} >
                                         <td style={{width:'70%'}}>
                                                 <div className={classes.col1} style={{float:'left'}} >
-                                                    <h3>Operator Name : {index.operatorName}</h3>
+                                                    <h3>Model :  {index.model}</h3>
                                                     <p style={{fontSize: '18px'}}>
-                                                        Trip Date : {index.Trip_date}
+                                                        Year : {index.year}
                                                         <br />
-                                                        Departure Time : {index.departureTime}
+                                                        Number plate : {index.number_plate}
                                                         <br />
-                                                        duration : {index.duration}hr
+                                                        Capacity : {index.capacity}
                                                         <br />
-                                                        <b style={{color: '#e04c54'}}>Fare : {index.fare}</b>
+                                                        
                                                     </p>
                                                 </div>
                                                 <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#007bff',}}>ViewSeats</a>
-                                                </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href={`/bookingdetails/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : '#17a2b8',}}>BookingDetails</a>
-                                                </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#e04c54',
-                                            position:"relative",
-                                            right:"737px"}}>Cancel</a>
+                                                <a href={`/createtrip/${index._id}`} class="btn btn-primary btn-lg" role="button"  style={{backgroundColor : '#17a2b8',}}>Createtrip</a>
                                                 </div>
                                         </td>
                                         </div>
@@ -95,13 +87,13 @@ function Viewtrip ({trip, fetchTrip}) {
 // export default Search
 const mapStateToProps=state=>{
     return {
-        trip:state.trip.trip.data
+        bus:state.bus.bus.data
     }
   }
   
   const mapDispatchToProps=dispatch=>{
     return {
-      fetchTrip:()=>dispatch(fetchTrip()),
+      fetchBuses:()=>dispatch(fetchBuses()),
   
     }}
-  export default connect(mapStateToProps,mapDispatchToProps)(Viewtrip)
+  export default connect(mapStateToProps,mapDispatchToProps)(Viewbus)

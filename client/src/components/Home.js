@@ -37,7 +37,7 @@ const Home = () => {
   return (
     <div>
         <NavBar />
-        <img src={BackGroundImage} className={classes.image} />
+        <img style={{width:"1200px"}} src={BackGroundImage} className={classes.image} />
         <div>
             <div
                 style={{
@@ -103,8 +103,8 @@ const Home = () => {
             <button style={{
                 fontSize: '20px',
                 textAlign: 'center',
-                width: '200px', 
-                height: '100px',
+                width: '150px', 
+                height: '60px',
                 border: 'none',
                 borderRadius : '5px', 
                 background: '#e04c54', 
