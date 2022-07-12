@@ -25,7 +25,9 @@ import {
     PROFILE_UPDATED_SUCCESSFULLY,
     PROFILE_UPDATED_ERROR,
     DELETE_TRIP_SUCCESS,
-    DELETE_TRIP_FAILURE
+    DELETE_TRIP_FAILURE,
+    CREATE_BOOKING_FAILURE, 
+    CREATE_BOOKING_SUCCESS
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -398,3 +400,20 @@ export const profile =
         }
     }
     
+    
+export const createbooking = (email, phoneNumber, fare, passengerDetails, tripId, busId, seatNumber) => async(dispatch) =>{
+    try {
+        console.log("Hai")
+        const res = await axios.post("http://localhost:5000/booking/createbooking", {email, phoneNumber, fare, passengerDetails, tripId, busId, seatNumber})
+        console.log(res)
+        dispatch({
+            type : CREATE_BOOKING_SUCCESS
+        })
+    }
+    catch(err) {
+        console.log(err)
+        dispatch({
+            type: CREATE_BOOKING_FAILURE
+        })
+    }
+}
