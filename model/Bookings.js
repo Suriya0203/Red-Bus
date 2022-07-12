@@ -42,7 +42,7 @@ const Bookings = mongoose.model('Bookings', {
         required:true
     },
     seatNumber:{
-        type:String,
+        type:[], 
         required:true
     },
     userId:{
