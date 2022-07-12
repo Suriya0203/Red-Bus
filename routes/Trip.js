@@ -16,7 +16,7 @@ router.post('/createtrip',auth,async(req,res)=>{
         // const check=await user.find({_id:req.payload._id})
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
-        if(check.is_admin==="true"){
+        if(check.is_admin==="yes"){
         // const find=await trip.find({number_plate:number_plate})
         const find=await trip.find({busId:busId})
         console.log(find)
@@ -25,6 +25,9 @@ router.post('/createtrip',auth,async(req,res)=>{
         //         message:"bus already excist"
         //     })
         // }
+        const newBus = await bus.findById(busId);
+        const availableSeats = Array.from(Array(newBus.capacity).keys())
+            console.log(availableSeats)
         const data=await new trip({
             operatorName:operatorName,
             busId:busId,
@@ -34,7 +37,8 @@ router.post('/createtrip',auth,async(req,res)=>{
             duration:duration,
             Trip_date:Trip_date,
             created_on:created_on,
-            fare:fare
+            fare:fare, 
+            availableSeats : availableSeats
         })
         data.save()
         res.status(200).json({
@@ -87,7 +91,6 @@ router.get("/alltrip",auth,async(req,res)=>{
 })
 router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     try{
-        console.log("suriya")
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
