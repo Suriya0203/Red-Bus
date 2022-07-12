@@ -9,6 +9,7 @@ import { GET_TRIP_FAILURE, GET_TRIP_SUCCESSS } from '../actions/type'
 import { makeStyles } from '@material-ui/core' 
 import { fetchTrip } from '../actions/auth'
 import NavBar from './NavBar'
+import { deletetrip } from '../actions/auth';
 const useStyles = makeStyles((theme) => ({
     box : {
         width: '75%', 
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }, 
 }));
 
-function Viewtrip ({trip, fetchTrip}) {
+function Viewtrip ({trip, fetchTrip,deletetrip}) {
     const classes = useStyles();
     const val = useParams();
 
@@ -65,11 +66,15 @@ function Viewtrip ({trip, fetchTrip}) {
                                                 <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
                                                 <a href={`/bookingdetails/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : '#17a2b8',}}>BookingDetails</a>
                                                 </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
+                                                {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
                                                 <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#e04c54',
                                             position:"relative",
                                             right:"737px"}}>Cancel</a>
-                                                </div>
+                                                </div> */}
+                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
+                                                <button type="button" class="btn btn-danger"  style={{backgroundColor : '#e04c54',
+                                            position:"relative",
+                                            right:"737px"}} onClick={deletetrip(index._id)}>cancel</button></div>
                                         </td>
                                         </div>
                                     </table>
@@ -102,6 +107,7 @@ const mapStateToProps=state=>{
   const mapDispatchToProps=dispatch=>{
     return {
       fetchTrip:()=>dispatch(fetchTrip()),
+      deletetrip:(id)=>dispatch(deletetrip(id))
   
     }}
   export default connect(mapStateToProps,mapDispatchToProps)(Viewtrip)

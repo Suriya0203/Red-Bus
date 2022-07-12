@@ -82,16 +82,20 @@ const NavBar = ({user,type}) => {
                     </div>
                 </div>
             </div>
-
+         
             <div className="nav-links">
+            {(user!==null)?(
+                      <a style={{
+                        position:"relative",
+                        left:"20%",
+                        bottom:"20px",
+                        color:"white"
+                    }}href="/info/termscondition">Help</a>
+            
+               ):(<></>)}
+            {  (user!==null) ?
+                    (
               
-                <a style={{
-                            position:"relative",
-                            left:"20%",
-                            bottom:"20px",
-                            color:"white"
-                        }}href="/Help">Help</a>
-                
                 <div className="dropdown"style={{
                             position:"relative",
                             left:"20%",
@@ -110,7 +114,9 @@ const NavBar = ({user,type}) => {
                     </div>
                     
                 </div>
-               
+
+               ):(<></>)}
+             
                 {(
                     type!==null && type.is_admin==="true")?
                 (
@@ -167,7 +173,11 @@ const NavBar = ({user,type}) => {
                     : 
                     (
                         <div className="dropdown">
-                            <a className="dropBtn" href="/">
+                            <a className="dropBtn" href="/" style={{
+                                color:"white",
+                                position:"relative",
+                                left:"100px"
+                            }}>
                                 Login
                             </a>
                             <div className="drop-content">

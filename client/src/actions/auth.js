@@ -23,7 +23,9 @@ import {
     GET_BOOKING_SUCCESS,
     GET_BOOKING_FAILURE,
     PROFILE_UPDATED_SUCCESSFULLY,
-    PROFILE_UPDATED_ERROR
+    PROFILE_UPDATED_ERROR,
+    DELETE_TRIP_SUCCESS,
+    DELETE_TRIP_FAILURE
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -376,3 +378,23 @@ export const profile =
 			});
 		}
 	};
+
+
+    export const deletetrip = (id) => async(dispatch) => {
+        try {
+            console.log("suriya prakash")
+            const res = await axios.get(`http://localhost:5000/trip/canceltrip/${id}`)
+            console.log(res)
+            dispatch({
+                type: DELETE_TRIP_SUCCESS, 
+                payload : res.data
+            })
+        }
+        catch(err) {
+            console.log(err);
+            dispatch({
+                type : DELETE_TRIP_FAILURE
+            })
+        }
+    }
+    

@@ -87,6 +87,7 @@ router.get("/alltrip",auth,async(req,res)=>{
 })
 router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     try{
+        console.log("suriya")
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
