@@ -15,7 +15,7 @@ router.post("/addbus",auth,async(req,res)=>{
         // const check=await user.find({_id:req.payload._id})
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
-        if(check.is_admin==="true"){
+        if(check.is_admin==="yes"){
         // const find=await bus.findOne({number_plate:number_plate})
         // console.log(find.model)
         // if(find._id===undefined){
@@ -76,4 +76,29 @@ router.get("/allbus",auth,async(req,res)=>{
         })
     }
 })
+
+router.post('/getBusById', auth, async(req, res) => {
+    console.log("hello", req.body)
+    try{
+        var data = await bus.findById(req.body.id)
+        console.log(data);
+        if(data) {
+            res.status(200).json({
+                message : "success", 
+                data : data
+            })
+        }
+        else{
+            res.status(401).json({
+                message:"no bus"
+            })
+        }
+    }
+    catch(err){
+        res.status(500).json({
+            error:err
+        })
+    }
+})
+
 module.exports=router;
