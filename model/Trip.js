@@ -38,6 +38,14 @@ const Trip = mongoose.model('Trip', {
     },
     created_on:{
         type :Date
-    }    
+    }, 
+    bookedSeats : {
+        type : [], 
+        default : []
+    }, 
+    availableSeats : {
+        type : [], 
+        default : []
+    }
 })
 module.exports = Trip
