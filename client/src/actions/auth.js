@@ -385,7 +385,7 @@ export const profile =
     export const deletetrip = (id) => async(dispatch) => {
         try {
             console.log("suriya prakash")
-            const res = await axios.get(`http://localhost:5000/trip/canceltrip/${id}`)
+            const res = await axios.delete(`http://localhost:5000/trip/canceltrip/${id}`)
             console.log(res)
             dispatch({
                 type: DELETE_TRIP_SUCCESS, 

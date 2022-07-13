@@ -1,10 +1,12 @@
 const router =require("express").Router();
 const bus=require("../model/Bus");
 const user=require("../model/User")
+const Bookings=require("../model/Bookings")
 const auth=require("../middleware/tokenValidation")
 const moment=require("moment")
 const trip=require("../model/Trip")
-const mongoose=require("mongoose")
+const mongoose=require("mongoose");
+const Trip = require("../model/Trip");
 router.post('/createtrip',auth,async(req,res)=>{
     try{
         console.log("suriya")
@@ -91,22 +93,32 @@ router.get("/alltrip",auth,async(req,res)=>{
 })
 router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     try{
+        console.log("suriya")
+        const id = mongoose.Types.ObjectId(req.params.id.trim());
+        // var find=await Bookings.find({tripId:id})
+        // if(find){
+        //     res.json(400).json({
+        //         msg:"trip have a booking"
+        //     })
+        // }
+        // else{
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
-                message:"you don'y have a permission"
+                message:"you don't have a permission"
             })
         }
+        else{
         // id=req.params.id.toString()
         // console.log(mongoose.Types.ObjectId.isValid(id));
         // ObjectId.fromString( id );
-        const id = mongoose.Types.ObjectId(req.params.id.trim());
-        const data=await Bookings.findOne({_id:id})
+       
+        const data=await Trip.find({_id:id})
         console.log(data)
         if(data){
-        data.delete()
-        res.status(200).json({
+            const delete_num=await Trip.findOneAndDelete({_id:id})
+            res.status(200).json({
             message:"success"
         })
     }
@@ -115,7 +127,7 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
                 message:"No trip in this id"
             })
         }
-    }
+    }}
     catch(err){
         console.log(err)
         res.status(500).json(

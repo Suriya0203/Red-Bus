@@ -16,6 +16,22 @@ router.post('/createbooking',auth,async(req,res)=>{
           } = req.body.email;
         //const fare=
         const find=await trip.findById(tripId)
+        const user_find=await Bookings.find({tripId:tripId})
+        // const check=await user_find.find(phoneNumber)
+        if(user_find){
+            user_find.map((index)=>{
+                if(index.phoneNumber===phoneNumber){
+                    console.log("suriya")
+                    res.status(401).json({
+                    msg:"user already booked"
+                })
+                }
+            })
+            // console.log(check)
+            //console.log(user_find,'---------')
+                
+        }
+        else{
         console.log(find);
         if(find){
             var seats = [];
@@ -64,10 +80,10 @@ router.post('/createbooking',auth,async(req,res)=>{
                 message:"No trip in this ID"
             })
         }
-    }
+    }}
     catch(err){
         console.log(err)
-        res.json(500).json(err)
+        res.status(500).json(err)
     }
 })
 

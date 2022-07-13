@@ -24,6 +24,7 @@ import Viewtripcheck from './components/Viewtrip'
 // import viewbus2 from "./components/viewbus2";
 import Viewbus2 from "./components/viewbus2";
 import Viewtrip from "./components/Viewtrip";
+import DeleteTrip from './components/DeleteTrip'
 // import profile_page from './components/profile2'
 if (localStorage.token) {
 
@@ -85,6 +86,10 @@ const App = ({user}) => {
                     <Route 
                       path = '/bookingdetails/:id'
                       element = { <BookingDetails /> }
+                  />
+                     <Route 
+                      path = '/deletetrip/:id'
+                      element = { <DeleteTrip /> }
                   />
                   <Route 
                       path = '/profile'

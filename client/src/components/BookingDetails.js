@@ -82,7 +82,7 @@ function BookingDetails ({trip, getBooking}) {
         return (
             <div>
                 <b style={{color:'#e04c54', textAlign:'center'}}>
-                    <h3>No Results</h3>
+                    <h3>Loading...</h3>
                 </b>  
             </div>
         )

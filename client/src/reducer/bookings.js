@@ -32,7 +32,7 @@ import {
             alert("Ticket Booked Successfully");
             window.location.reload(false);
         case CREATE_BOOKING_FAILURE :
-            alert("Booking Failed");
+            alert("User already booked");
         default:
         
           return state;

@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-// import NavBar from './NavBar'
+import NavBar from './NavBar'
 import {connect, useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
 import { IoSwapHorizontal } from 'react-icons/io5';
-import { getTrip} from "../actions/auth";
-import { GET_TRIP_FAILURE, GET_TRIP_SUCCESSS } from '../actions/type'
+import { getBooking} from "../actions/auth";
 import { makeStyles } from '@material-ui/core' 
-import { fetchTrip } from '../actions/auth'
-import NavBar from './NavBar'
-import { deletetrip } from '../actions/auth';
+import { deletetrip } from '../actions/auth'
 const useStyles = makeStyles((theme) => ({
     box : {
         width: '75%', 
@@ -21,26 +18,28 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft : '10px'
     }, 
 }));
-
-function Viewtrip ({trip, fetchTrip,deletetrip}) {
+function DeleteTrip ({trip, getBooking,deletetrip}) {
     const classes = useStyles();
-    const val = useParams();
-
+    const params = useParams();
     const dispatch = useDispatch();
-
- 
-    
+    console.log(params.id)
     useEffect(()=>{
-        
-        fetchTrip()
+        console.log("suriya")
+        getBooking(params.id)
     }, []) 
-
+   
+     
+            console.log("suriya")
+    deletetrip(params.id)
+      
+   
     console.log(trip)
+
     if(trip) {
+        // console.log(trip.pas)
         return (
-                <div>
-                    <NavBar/><br/><br/><br/>
-                    <div>
+            <div>
+               <h1>Money Refunded to Booked users</h1>
                     {trip.map((index) => {
                             console.log(index._id)
                             return (
@@ -49,30 +48,30 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
                                     <div className={classes.boxValue} >
                                         <td style={{width:'70%'}}>
                                                 <div className={classes.col1} style={{float:'left'}} >
-                                                    {/* <h3>Operator Name : {index.operatorName}</h3> */}
+                                                    <h3>Name: {index.passengerDetails[0]["name"]}</h3>
                                                     <p style={{fontSize: '18px'}}>
-                                                        Trip Date : {index.Trip_date.slice(0,10)}
+                                                        seatNum: {index.seatNumber}
                                                         <br />
-                                                        Departure Time : {index.departureTime}
+                                                        PhoneNumber : {index.phoneNumber}
                                                         <br />
-                                                        duration : {index.duration}hr
+                                                        Age : {index.passengerDetails[0]["age"]}
                                                         <br />
                                                         <b style={{color: '#e04c54'}}>Fare : {index.fare}</b>
                                                     </p>
                                                 </div>
                                                 {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#007bff',}}>ViewSeats</a>
+                                                    <button id={index._id} style={{
+                                                        width : '200px', 
+                                                        height: '50px', 
+                                                        backgroundColor : '#e04c54', 
+                                                        color : 'white', 
+                                                        border : 'none', 
+                                                        borderRadius : '5px', 
+                                                        fontSize: '18px'
+                                                    }} onClick={Call()}>
+                                                        View Seats
+                                                    </button>
                                                 </div> */}
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href={`/bookingdetails/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : '#17a2b8',}}>BookingDetails</a>
-                                                </div>
-                                                {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#e04c54',
-                                            position:"relative",
-                                            right:"737px"}}>Cancel</a>
-                                                </div> */}
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href={`/deletetrip/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : 'rgb(223, 75, 75)',}}>Delete</a></div>
                                         </td>
                                         </div>
                                     </table>
@@ -81,14 +80,14 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
                         }) 
                     }
                 </div>
-                </div>
+      
         )
     }
     else{
         return (
             <div>
                 <b style={{color:'#e04c54', textAlign:'center'}}>
-                    <h3>Loading ...</h3>
+                    <h3>Loading...</h3>
                 </b>  
             </div>
         )
@@ -98,14 +97,14 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
 // export default Search
 const mapStateToProps=state=>{
     return {
-        trip:state.trip.trip.data
+        trip:state.bookings.booking.data
     }
   }
   
   const mapDispatchToProps=dispatch=>{
     return {
-      fetchTrip:()=>dispatch(fetchTrip()),
+      getBooking:(id)=>dispatch(getBooking(id)),
       deletetrip:(id)=>dispatch(deletetrip(id))
   
     }}
-  export default connect(mapStateToProps,mapDispatchToProps)(Viewtrip)
+  export default connect(mapStateToProps,mapDispatchToProps)(DeleteTrip)
