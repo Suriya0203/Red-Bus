@@ -7,6 +7,17 @@ const moment=require("moment")
 const trip=require("../model/Trip")
 const mongoose=require("mongoose");
 const Trip = require("../model/Trip");
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'suriyaprakash0203@gmail.com',
+    pass: 'jtgmyxxqkuxmdhzj'
+  }
+});
+
+
 router.post('/createtrip',auth,async(req,res)=>{
     try{
         console.log("suriya")
@@ -95,12 +106,9 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     try{
         console.log("suriya")
         const id = mongoose.Types.ObjectId(req.params.id.trim());
-        // var find=await Bookings.find({tripId:id})
-        // if(find){
-        //     res.json(400).json({
-        //         msg:"trip have a booking"
-        //     })
-        // }
+        var find=await Bookings.find({tripId:id})
+        var mailList=[];
+
         // else{
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
@@ -110,6 +118,25 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
             })
         }
         else{
+            if(find){
+            
+                find.map((index)=>{
+                     mailList.push(index.email)
+                })
+                var mailOptions = {
+                 from: 'suriyaprakash0203@gmail.com',
+                 to: mailList,
+                 subject: 'Trip canceled',
+                 text: 'You"r money will refund'
+               };
+             transporter.sendMail(mailOptions, function(error, info){
+                 if (error) {
+                   console.log(error);
+                 } else {
+                   console.log('Email sent: ' + info.response);
+                 }
+               });
+             }
         // id=req.params.id.toString()
         // console.log(mongoose.Types.ObjectId.isValid(id));
         // ObjectId.fromString( id );
@@ -118,6 +145,7 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
         console.log(data)
         if(data){
             const delete_num=await Trip.findOneAndDelete({_id:id})
+      
             res.status(200).json({
             message:"success"
         })

@@ -127,7 +127,7 @@ function Search ({trip, getTrip}) {
                                     <div className={classes.boxValue} >
                                         <td style={{width:'70%'}}>
                                                 <div className={classes.col1} style={{float:'left'}} >
-                                                    <h3>Operator Name : {index.operatorName}</h3>
+                                                    {/* <h3>Operator Name : {index.operatorName}</h3> */}
                                                     <p style={{fontSize: '18px'}}>
                                                         Trip Date : {index.Trip_date}
                                                         <br />

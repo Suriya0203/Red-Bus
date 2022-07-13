@@ -39,7 +39,9 @@ function DeleteTrip ({trip, getBooking,deletetrip}) {
         // console.log(trip.pas)
         return (
             <div>
-               <h1>Money Refunded to Booked users</h1>
+               <h3 style={{
+                   textAlign:"center"
+               }}>Money Refunded to Booked users</h3>
                     {trip.map((index) => {
                             console.log(index._id)
                             return (
