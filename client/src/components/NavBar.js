@@ -84,16 +84,7 @@ const NavBar = ({user,type}) => {
             </div>
          
             <div className="nav-links">
-            {(user!==null)?(
-                      <a style={{
-                        position:"relative",
-                        left:"20%",
-                        bottom:"20px",
-                        color:"white"
-                    }}href="/info/termscondition">Help</a>
-            
-               ):(<></>)}
-            {  (user!==null) ?
+            {/* {  (user!==null) ?
                     (
               
                 <div className="dropdown"style={{
@@ -115,7 +106,7 @@ const NavBar = ({user,type}) => {
                     
                 </div>
 
-               ):(<></>)}
+               ):(<></>)} */}
              
                 {(
                     type!==null && type.is_admin==="true")?
@@ -137,11 +128,33 @@ const NavBar = ({user,type}) => {
                         <a href="/addbus">Addbus</a>
                         <a href="/viewbus">Viewbus</a>
                         <a href="/addadmin">Addadmin</a>
-                        <a href="/">Cancel</a>
+                        
                     </div>
                     </div>
                 ):(
-              <></> 
+                      (user!==null) ?
+                        (
+                  
+                    <div className="dropdown"style={{
+                                position:"relative",
+                                left:"20%",
+                                bottom:"20px",
+                                color:"white"
+                            }}>
+                        <a className="dropBtn"style={{
+                            color:"white"
+                        }}  href="/">
+                            Manage Booking
+                        </a>
+                        <div className="drop-content">
+                            <a href="/">Cancel</a>
+                            <a href="/">Show My Ticket</a>
+                            <a href="/">Email</a>
+                        </div>
+                        
+                    </div>
+    
+                   ):(<></>)
                 )}
 
 

@@ -1,7 +1,9 @@
 import {
  
     GET_BOOKING_SUCCESS,
-    GET_BOOKING_FAILURE
+    GET_BOOKING_FAILURE,
+    CREATE_BOOKING_FAILURE,
+    CREATE_BOOKING_SUCCESS
     } from '../actions/type'
     
     const initialState = {

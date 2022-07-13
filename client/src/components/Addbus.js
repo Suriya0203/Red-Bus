@@ -7,19 +7,43 @@ import { connect } from "react-redux";
 function Addbus({Addbus_action}){
     const [formData, setFormData] = useState({
       number_plate: "",
-      model: "",
+      travels_name: "",
       year:"",
-      capacity:""
+      capacity:"" 
         
 	});
-    const { number_plate, model,year, capacity} = formData;
+    const { number_plate, travels_name,year, capacity} = formData;
 
 	const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
     const onSubmit = async (e) => {
+      var dateObj = new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year_2 = dateObj.getUTCFullYear();
+      
+      var newdate = year_2 + "-" + month + "-" + day;
+      console.log(newdate)
+     
+      e.preventDefault();
+      console.log(year)
+      var date=new Date(year)
+      var month_2=new Date(year).getUTCMonth()+1;
+      var day_2=new Date(year).getUTCDate();
+       var year_3=new Date(year).getUTCFullYear()
+       console.log(day_2)
+       console.log(year_3)
+      console.log(month_2)
+      if(date<dateObj){//year_3<year_2 && month_2<month&&year_2<day){
+        Addbus_action(formData)
+      
+      }
+      else{
+        alert('Enter year is not correct')
+      }
 		console.log("suriya")
-		e.preventDefault();
-		Addbus_action(formData)
+	
+		
 	
 
 	}
@@ -39,12 +63,12 @@ function Addbus({Addbus_action}){
   
   placeholder="Enter number plate.."/>
 
-  <label for="model">modal</label>
-  <input type="text" id="model" name="model" 
-  value={model}
+  <label for="travels_name">travels_name</label>
+  <input type="text" id="travels_name" name="travels_name" 
+  value={travels_name}
   onChange={(e) => onChange(e)}
   required
-  placeholder="Enter model.."/>
+  placeholder="Enter travels name.."/>
 
   <label for="year">year</label>
   <input type="date" id="year" name="year" 

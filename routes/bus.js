@@ -8,21 +8,21 @@ router.post("/addbus",auth,async(req,res)=>{
     try{
         const created_on = moment(new Date());
         const {
-            number_plate, model, year, capacity,
+            number_plate, travels_name, year, capacity,
           } = req.body;
 
         console.log(req.body.NumberPlate)
         // const check=await user.find({_id:req.payload._id})
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
-        if(check.is_admin==="yes"){
+        if(check.is_admin==="true"){
         // const find=await bus.findOne({number_plate:number_plate})
         // console.log(find.model)
         // if(find._id===undefined){
        
         const data=await new bus({
             number_plate:number_plate,
-            model:model,
+            travels_name:travels_name,
             year:year,
             capacity:capacity,
             created_on:created_on

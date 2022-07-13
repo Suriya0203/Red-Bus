@@ -16,7 +16,7 @@ router.post('/createtrip',auth,async(req,res)=>{
         // const check=await user.find({_id:req.payload._id})
         var check=await user.findById(req.user.id)
         console.log(check.is_admin)
-        if(check.is_admin==="yes"){
+        if(check.is_admin==="true"){
         // const find=await trip.find({number_plate:number_plate})
         const find=await trip.find({busId:busId})
         console.log(find)

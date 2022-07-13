@@ -5,7 +5,7 @@ const Bus = mongoose.model('Bus', {
         type:String,
         required:true
     },
-    model:{
+    travels_name:{
         type:String,
         required:true
     },

@@ -48,7 +48,7 @@ function Viewbus ({bus,fetchBuses}) {
                                     <div className={classes.boxValue} >
                                         <td style={{width:'70%'}}>
                                                 <div className={classes.col1} style={{float:'left'}} >
-                                                    <h3>Model :  {index.model}</h3>
+                                                    <h3>Travels Name :  {index.travels_name}</h3>
                                                     <p style={{fontSize: '18px'}}>
                                                         Year : {index.year}
                                                         <br />
@@ -77,7 +77,7 @@ function Viewbus ({bus,fetchBuses}) {
         return (
             <div>
                 <b style={{color:'#e04c54', textAlign:'center'}}>
-                    <h3>No Results</h3>
+                    <h3>Loading...</h3>
                 </b>  
             </div>
         )

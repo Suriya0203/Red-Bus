@@ -49,9 +49,9 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
                                     <div className={classes.boxValue} >
                                         <td style={{width:'70%'}}>
                                                 <div className={classes.col1} style={{float:'left'}} >
-                                                    <h3>Operator Name : {index.operatorName}</h3>
+                                                    {/* <h3>Operator Name : {index.operatorName}</h3> */}
                                                     <p style={{fontSize: '18px'}}>
-                                                        Trip Date : {index.Trip_date}
+                                                        Trip Date : {index.Trip_date.slice(0,10)}
                                                         <br />
                                                         Departure Time : {index.departureTime}
                                                         <br />
@@ -60,9 +60,9 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
                                                         <b style={{color: '#e04c54'}}>Fare : {index.fare}</b>
                                                     </p>
                                                 </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
+                                                {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
                                                 <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#007bff',}}>ViewSeats</a>
-                                                </div>
+                                                </div> */}
                                                 <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
                                                 <a href={`/bookingdetails/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : '#17a2b8',}}>BookingDetails</a>
                                                 </div>
@@ -74,7 +74,7 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
                                                 <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
                                                 <button type="button" class="btn btn-danger"  style={{backgroundColor : '#e04c54',
                                             position:"relative",
-                                            right:"737px"}} onClick={deletetrip(index._id)}>cancel</button></div>
+                                            left:"70px"}} onClick={deletetrip(index._id)}>cancel</button></div>
                                         </td>
                                         </div>
                                     </table>
@@ -90,7 +90,7 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
         return (
             <div>
                 <b style={{color:'#e04c54', textAlign:'center'}}>
-                    <h3>No Results</h3>
+                    <h3>Loading ...</h3>
                 </b>  
             </div>
         )

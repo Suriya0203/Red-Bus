@@ -54,7 +54,7 @@ function BookingDetails ({trip, getBooking}) {
                                                         <b style={{color: '#e04c54'}}>Fare : {index.fare}</b>
                                                     </p>
                                                 </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
+                                                {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
                                                     <button id={index._id} style={{
                                                         width : '200px', 
                                                         height: '50px', 
@@ -66,7 +66,7 @@ function BookingDetails ({trip, getBooking}) {
                                                     }} >
                                                         View Seats
                                                     </button>
-                                                </div>
+                                                </div> */}
                                         </td>
                                         </div>
                                     </table>
