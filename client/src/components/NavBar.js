@@ -147,9 +147,9 @@ const NavBar = ({user,type}) => {
                             Manage Booking
                         </a>
                         <div className="drop-content">
-                            <a href="/">Cancel</a>
-                            <a href="/">Show My Ticket</a>
-                            <a href="/">Email</a>
+                            {/* <a href="/">Cancel</a> */}
+                            <a href="/mytrip">Show My Ticket</a>
+                            {/* <a href="/">Email</a> */}
                         </div>
                         
                     </div>

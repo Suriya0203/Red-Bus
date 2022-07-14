@@ -31,18 +31,18 @@ function Createtrip({Createtrip_action}){
    
   const onSubmit = async (e) => {
     // console.log(formData)
-    var dateObj = new Date();
-    var date=new Date(Trip_date)
+    // var dateObj = new Date();
+    // var date=new Date(Trip_date)
 		// console.log("suriya")
     // setFormData({ ...formData, [busId]:id });
 		e.preventDefault();
-    if(date>=dateObj){//year_3<year_2 && month_2<month&&year_2<day){
-      Createtrip_action(formData)
+    // if(date>=dateObj){//year_3<year_2 && month_2<month&&year_2<day){
+    Createtrip_action(formData)
     
-    }
-    else{
-      alert('Enter year is not correct')
-    }
+    // }
+    // else{
+    //   alert('Enter year is not correct')
+    // }
 	
 	
 
@@ -88,7 +88,7 @@ function Createtrip({Createtrip_action}){
 
 
       <label for="Trip_date">Trip_date</label>
-  <input type="date" id="Trip_date" name="Trip_date"
+  <input type="date" id="Trip_date" min={new Date().toISOString().split('T')[0]} name="Trip_date"
    value={Trip_date}required
    onChange={(e) => onChange(e)}
     placeholder="Enetr Trip_date.."/> 

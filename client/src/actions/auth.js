@@ -27,7 +27,13 @@ import {
     DELETE_TRIP_SUCCESS,
     DELETE_TRIP_FAILURE,
     CREATE_BOOKING_FAILURE, 
-    CREATE_BOOKING_SUCCESS
+    CREATE_BOOKING_SUCCESS,
+    GET_MY_BOOKING_SUCCESS,
+    GET_MY_BOOKING_FAILURE,
+    FETCH_TICKET_SUCCESS,
+    FETCH_TICKET_FAILURE,
+    CANCEL_BOOKING_SUCCESS,
+    CANCEL_BOOKING_FAILURE
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -417,3 +423,81 @@ export const createbooking = (email, phoneNumber, fare, passengerDetails, tripId
         })
     }
 }
+
+
+export const fetchMytrip =()=>async(dispatch)=>{
+    console.log("suriya")
+    try{
+        const res=await axios.get("http://localhost:5000/booking/allbookings")
+        dispatch({
+            type:GET_MY_BOOKING_SUCCESS,
+            payload:res.data
+        })
+        // dispatch(loadUser());
+        // console.log(res.data)
+        // dispatch(loadUser());
+        return res.data
+    }
+    catch(err){
+        console.log(err)
+        dispatch({
+            type:GET_MY_BOOKING_FAILURE
+        })
+    }
+}
+
+/////
+
+
+
+export const fetchTicket =()=>async(dispatch)=>{
+    console.log("suriya")
+    try{
+        const res=await axios.get("http://localhost:5000/booking/getticket")
+        dispatch({
+            type:FETCH_TICKET_SUCCESS,
+            payload:res.data
+        })
+        // dispatch(loadUser());
+        // console.log(res.data)
+        // dispatch(loadUser());
+        return res.data
+    }
+    catch(err){
+        console.log(err)
+        dispatch({
+            type:FETCH_TICKET_FAILURE
+        })
+    }
+}
+
+/////
+
+
+export const CancelBooking_action =
+( id) =>
+async (dispatch) => {
+	console.log(id,"kavin")
+	console.log("suriya prakash")
+	try {
+		const res = await axios.delete(
+			`http://localhost:5000/booking/deletebooking/${id}`,
+		);
+
+		dispatch({
+			type: CANCEL_BOOKING_SUCCESS,
+			payload: res.data,
+		});
+
+
+	} catch (err) {
+
+		
+		console.log(err)
+		
+
+		dispatch({
+			type: CANCEL_BOOKING_FAILURE,
+		});
+	}
+};

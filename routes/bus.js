@@ -13,7 +13,7 @@ router.post("/addbus",auth,async(req,res)=>{
 
         console.log(req.body.NumberPlate)
         // const check=await user.find({_id:req.payload._id})
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="true"){
         // const find=await bus.findOne({number_plate:number_plate})
@@ -49,7 +49,7 @@ router.post("/addbus",auth,async(req,res)=>{
 
 router.get("/allbus",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
@@ -80,7 +80,7 @@ router.get("/allbus",auth,async(req,res)=>{
 router.post('/getBusById', auth, async(req, res) => {
     console.log("hello", req.body)
     try{
-        var data = await bus.findById(req.body.id)
+        let data = await bus.findById(req.body.id)
         console.log(data);
         if(data) {
             res.status(200).json({

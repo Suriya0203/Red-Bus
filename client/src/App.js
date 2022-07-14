@@ -25,6 +25,10 @@ import Viewtripcheck from './components/Viewtrip'
 import Viewbus2 from "./components/viewbus2";
 import Viewtrip from "./components/Viewtrip";
 import DeleteTrip from './components/DeleteTrip'
+import PlaneTicketCard from './components/Ticket'
+import Mytrip from './components/Mytrip'
+import Ticket from './components/Ticket'
+import CancelBooking from './components/CancelBooking'
 // import profile_page from './components/profile2'
 if (localStorage.token) {
 
@@ -60,12 +64,20 @@ const App = ({user}) => {
                       element = { <Createtrip /> }
                   />
                   <Route 
+                      path = '/ticket'
+                      element = { <PlaneTicketCard /> }
+                  />
+                  <Route 
                       path = '/info/termscondition'
                       element = { <TermsAndCondition /> }
                   />
                    <Route 
                       path = '/viewtrip'
                       element = { <Viewtrip /> }
+                  />
+                  <Route 
+                      path = '/mytrip'
+                      element = { <Ticket /> }
                   />
                    <Route 
                       path = '/addadmin'
@@ -90,6 +102,11 @@ const App = ({user}) => {
                      <Route 
                       path = '/deletetrip/:id'
                       element = { <DeleteTrip /> }
+                  />
+
+                    <Route 
+                      path = '/cancelbooking/:id'
+                      element = { <CancelBooking /> }
                   />
                   <Route 
                       path = '/profile'

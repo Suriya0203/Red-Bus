@@ -4,8 +4,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth=require("../middleware/tokenValidation")
 const getAccess = require('../middleware/tokenValidation')
-var jwtSecret = process.env.JWT_KEY
+const  jwtSecret = process.env.JWT_KEY
 const { check, validationResult } = require("express-validator");
+
+const authSchema=require('../Helpers/BookingValidation')
 router.get("/", auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);
@@ -28,6 +30,8 @@ router.post(
 		// }
 	
 		const { email, password } = req.body;
+		// const result=await authSchema.validateAsync(req.body)
+		// console.log(result)
 		console.log("suriya")
         console.log(email)
 		try {
@@ -61,6 +65,11 @@ router.post(
 				res.json({ token });
 			});
 		} catch (err) {
+			if(err.isJoi===true){
+				res.status(422).json({
+					msg:"Invalid credentials"
+				})
+			}
 			console.error(err);
 			res.status(500).send("Server error");
 		}
@@ -135,7 +144,7 @@ router.post("/changepassword",auth,async (req,res)=>{
 
 				Newpassword = await bcrypt.hash(req.body.NewPassword, salt);
 			console.log(Newpassword)
-			var data=await User.findByIdAndUpdate(req.user.id,{
+			let data=await User.findByIdAndUpdate(req.user.id,{
 				$set:{password:Newpassword}
 			  })
 			  console.log(data)

@@ -5,8 +5,9 @@ const auth=require("../middleware/tokenValidation")
 const trip=require("../model/Trip")
 const moment=require("moment");
 const Bookings = require("../model/Bookings");
-var mongoose = require('mongoose');
-
+let mongoose = require('mongoose');
+const authSchema=require('../Helpers/BookingValidation');
+const Trip = require("../model/Trip");
 router.post('/createbooking',auth,async(req,res)=>{
     console.log(req.body)
     try{
@@ -15,44 +16,45 @@ router.post('/createbooking',auth,async(req,res)=>{
             passengerDetails, email, phoneNumber, tripId, fare, busId, seatNumber,
           } = req.body.email;
         //const fare=
+        // const result=await authSchema.validateAsync(req.body)
         const find=await trip.findById(tripId)
-        const user_find=await Bookings.find({tripId:tripId})
-        // const check=await user_find.find(phoneNumber)
-        if(user_find){
-            user_find.map((index)=>{
-                if(index.phoneNumber===phoneNumber){
-                    console.log("suriya")
-                    res.status(401).json({
-                    msg:"user already booked"
-                })
-                }
-            })
+        // const user_find=await Bookings.find({tripId:tripId})
+        // // const check=await user_find.find(phoneNumber)
+        // if(user_find){
+        //     user_find.map((index)=>{
+        //         if(index.phoneNumber===phoneNumber){
+        //             console.log("suriya")
+        //             res.status(401).json({
+        //             msg:"user already booked"
+        //         })
+        //         }
+        //     })
             // console.log(check)
             //console.log(user_find,'---------')
                 
-        }
-        else{
+        // }
+        // else{
         console.log(find);
         if(find){
-            var seats = [];
-            for(var i=0; i<find.bookedSeats; i++)
+            let seats = [];
+            for(let i=0; i<find.bookedSeats; i++)
             {
                 seats.push(find.bookedSeats[i])
             }
-            for(var i =0; i<seatNumber.length; i++)
+            for(let i =0; i<seatNumber.length; i++)
             {
                 seats.push(seatNumber[i]);
             }
             console.log("seats", seats);
 
-            var delSeats = [];
-            for(var i=0; i< find.availableSeats.length; i++)
+            let delSeats = [];
+            for(let i=0; i< find.availableSeats.length; i++)
             {
                 delSeats.push(find.availableSeats[i])
             }
             console.log("delSeats", delSeats)
 
-            for(var i=0; i<seatNumber.length; i++)
+            for(let i=0; i<seatNumber.length; i++)
             {
                 const index = delSeats.indexOf(parseInt(seatNumber[i]));
                 if(index > -1)
@@ -80,8 +82,13 @@ router.post('/createbooking',auth,async(req,res)=>{
                 message:"No trip in this ID"
             })
         }
-    }}
+    }
     catch(err){
+        if(err.isJoi===true){
+            res.status(422).json({
+                msg:"Invalid credentials"
+            })
+        }
         console.log(err)
         res.status(500).json(err)
     }
@@ -196,4 +203,34 @@ router.get("/getbookings/:id",auth,async(req,res)=>{
         })
     }
 })
+router.get('/getticket',auth,async(req,res)=>{
+    try{
+        const data=await Bookings.find({userId:req.user.id})
+        if(data){
+            console.log(data.tripId)
+            const second_data=await Bookings.findOne({userId:req.user.id})
+            const id = mongoose.Types.ObjectId(second_data.tripId);
+            
+
+            console.log(second_data.tripId,'-----',id)
+            const trip_data=await Trip.find({_id:id})
+            res.status(200).json({
+                data:data,
+                trip:trip_data
+            })
+        }
+        else{
+            res.json({
+                msg:"You not Book enything"
+            })
+        }
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({
+            msg:"server error"
+        })
+    }
+})
+
 module.exports=router

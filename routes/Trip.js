@@ -7,9 +7,9 @@ const moment=require("moment")
 const trip=require("../model/Trip")
 const mongoose=require("mongoose");
 const Trip = require("../model/Trip");
-var nodemailer = require('nodemailer');
+let nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'suriyaprakash0203@gmail.com',
@@ -27,7 +27,7 @@ router.post('/createtrip',auth,async(req,res)=>{
             duration,Trip_date,fare
           } = req.body;
         // const check=await user.find({_id:req.payload._id})
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="true"){
         // const find=await trip.find({number_plate:number_plate})
@@ -75,7 +75,7 @@ router.post('/createtrip',auth,async(req,res)=>{
 
 router.get("/alltrip",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
@@ -106,11 +106,11 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     try{
         console.log("suriya")
         const id = mongoose.Types.ObjectId(req.params.id.trim());
-        var find=await Bookings.find({tripId:id})
-        var mailList=[];
+        let find=await Bookings.find({tripId:id})
+        let mailList=[];
 
         // else{
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
@@ -123,7 +123,7 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
                 find.map((index)=>{
                      mailList.push(index.email)
                 })
-                var mailOptions = {
+                let mailOptions = {
                  from: 'suriyaprakash0203@gmail.com',
                  to: mailList,
                  subject: 'Trip canceled',
@@ -145,7 +145,9 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
         console.log(data)
         if(data){
             const delete_num=await Trip.findOneAndDelete({_id:id})
-      
+            const delete_booking=await Bookings.find({tripId:id})
+            delete_booking.delete()
+            
             res.status(200).json({
             message:"success"
         })
@@ -168,7 +170,7 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
 
 router.get("/filtertripbyorigin",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         // console.log(check.is_admin)
         // if(check.is_admin==="no"){
         //     res.status(404).json({
@@ -199,7 +201,7 @@ router.get("/filtertripbyorigin",auth,async(req,res)=>{
 
 router.get("/filtertripbydestination",auth,async(req,res)=>{
     try{
-        var check=await user.findById(req.user.id)
+        let check=await user.findById(req.user.id)
         console.log(check.is_admin)
         // if(check.is_admin==="no"){
         //     res.status(404).json({
@@ -231,7 +233,7 @@ router.get("/filtertripbydestination",auth,async(req,res)=>{
 router.post('/getTrip', auth, async(req, res) => {
     console.log(req.body)
     try{
-        var data = await trip.find({
+        let data = await trip.find({
             departureLocation : req.body.source, 
             arrivalLocation : req.body.destination
         })
@@ -258,7 +260,7 @@ router.post('/getTrip', auth, async(req, res) => {
 router.post('/getTripById', auth, async(req, res) => {
     console.log("hello", req.body)
     try{
-        var data = await trip.findById(req.body.id)
+        let data = await trip.findById(req.body.id)
         console.log(data);
         if(data) {
             res.status(200).json({

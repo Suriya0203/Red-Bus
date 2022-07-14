@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import cx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -6,11 +6,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import AirplanemodeActive from '@material-ui/icons/AirplanemodeActive';
 import VerticalTicketRip from '@mui-treasury/components/rip/verticalTicket';
 import { useVerticalRipStyles } from '@mui-treasury/styles/rip/vertical';
-
+import { fetchTicket } from '../actions/auth';
+import {connect, useDispatch, useSelector} from 'react-redux'
 const mainColor = '#003399';
 const lightColor = '#ecf2ff';
 const borderRadius = 12;
-
+// function Call(id){
+//   console.log(id,'-----')
+// }
 const useStyles = makeStyles(({ palette, breakpoints }) => ({
   card: {
     overflow: 'visible',
@@ -105,22 +108,42 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
   moveRight: {},
 }));
 
-export const PlaneTicketCardDemo = React.memo(function PlaneTicketCard() {
+function PlaneTicketCard({ticket,fetchTicket,trip}) {
   const styles = useStyles();
   const ripStyles = useVerticalRipStyles({
     size: 24,
     rightColor: lightColor,
     tearColor: mainColor,
   });
+
+  useEffect(()=>{
+        
+    fetchTicket()
+}, []) 
+const day=new Date()
+// const Call=async(e)=>{
+//   e.preventDefault();
+//   console.log("suriya")
+
+// }
+if(ticket){
   return (
-    <Card className={styles.card} elevation={0}>
+    <div>   
+       {ticket.map((index) => {
+         return(
+           <div>
+       <Card className={styles.card} elevation={0}>
       <div className={cx(styles.left, styles.moveLeft)}>
-        <CardMedia
-          className={styles.media}
-          image={
-            'https://dejpknyizje2n.cloudfront.net/marketplace/products/yin-yang-two-fighting-dragons-sticker-1538772130.3390164.png'
-          }
-        />
+      <div>
+      {index.passengerDetails.map((data) => {
+        return(
+          <div style={{position:"relative",left:"80px",color:"black",top:"10px", fontFamily: "Times New Roman"}}>
+      <p>Name: {data.name}</p>  
+      <p>Age: {data.age}</p>
+      <p>Gender: {data.gender}</p>
+          </div>
+      )})}
+      </div>
       </div>
       <VerticalTicketRip
         classes={{
@@ -131,22 +154,50 @@ export const PlaneTicketCardDemo = React.memo(function PlaneTicketCard() {
       />
       <div className={cx(styles.right, styles.moveRight)}>
         <div className={styles.label}>
-          <h2 className={styles.heading}>BEK</h2>
-          <p className={styles.subheader}>Beijing China</p>
+          <h2 className={styles.heading}>{trip["0"].departureLocation}</h2>
+          <p className={styles.subheader}>Fare {trip["0"].fare}</p>
         </div>
         <div className={styles.path}>
           <div className={styles.line}>
             <AirplanemodeActive className={styles.plane} />
           </div>
-          <span className={styles.flight}>AB256</span>
+          <span className={styles.flight}>{index.tripId}</span><br/>
+          <p className={styles.flight}>No of passenger: {index.passengerDetails.length}</p>
         </div>
+        
         <div className={styles.label}>
-          <h2 className={styles.heading}>DMK</h2>
-          <p className={styles.subheader}>Don Meaung</p>
+          <h2 className={styles.heading}>{trip["0"].arrivalLocation}</h2>
+          <p className={styles.subheader}>{trip["0"].Trip_date.slice(0,10)}</p><br/>
+          <a class="btn btn-primary" href={`/cancelbooking/${index._id}`} role="button">Cancel</a>
+        
         </div>
       </div>
-    </Card>
-  );
-});
+  <br/>
+   
+    </Card> <br/>  </div> 
+    )
+    })}
+    </div>
 
-export default PlaneTicketCardDemo;
+  );}
+  else{
+    return (
+      <div>No bookings</div>
+    )
+  }
+};
+const mapStateToProps=state=>{
+  return {
+      ticket:state.bookings.booking.data,
+      trip:state.bookings.booking.trip
+  }
+}
+
+const mapDispatchToProps=dispatch=>{
+  return {
+    fetchTicket:()=>dispatch(fetchTicket()),
+  
+
+  }}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PlaneTicketCard);

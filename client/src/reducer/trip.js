@@ -4,7 +4,9 @@ import {
     VIEW_TRIP_FAILURE,
     VIEW_TRIP_SUCCESSS,
     CREATE_TRIP_FAILURE,
-    CREATE_TRIP_SUCCESSFULL
+    CREATE_TRIP_SUCCESSFULL,
+    CANCEL_BOOKING_SUCCESS,
+    CANCEL_BOOKING_FAILURE
     } from '../actions/type'
     
     const initialState = {
@@ -49,7 +51,14 @@ import {
             error : action.payload, 
             trip : []
           };
-        
+        case CANCEL_BOOKING_SUCCESS:
+          // return <Navigate to="/ticket" />;
+          // alert(action.payload.msg)
+          window.location.href="/ticket"
+
+        case CANCEL_BOOKING_FAILURE:
+          // alert(action.payload.msg)
+          window.location.href="/ticket"
         default:
         
           return state;
