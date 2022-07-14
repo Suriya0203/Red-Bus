@@ -8,7 +8,16 @@ const Bookings = require("../model/Bookings");
 let mongoose = require('mongoose');
 const authSchema=require('../Helpers/BookingValidation');
 const Trip = require("../model/Trip");
+const { body, validationResult } = require("express-validator");
 router.post('/createbooking',auth,async(req,res)=>{
+    // await check('email').isEmail().run(req);
+    // await check('phoneNumber').isNumeric().run(req);
+    // const errors = validationResult(req);
+	// 	if (!errors.isEmpty()) {
+    //         console.log(errors)
+    //         console.log("suriya prakash ----------")
+	// 		return res.status(400).json({ errors: errors.array() });
+	// 	}
     console.log(req.body)
     try{
         const created_on = moment(new Date());

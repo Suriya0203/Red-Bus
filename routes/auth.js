@@ -19,8 +19,18 @@ router.get("/", auth, async (req, res) => {
 });
 router.post(
 	"/signin",
-	
+	[
+		check("email", "Please include a valid email").isEmail(),
+		check(
+			"password",
+			"Please enter password with 6 or more characters"
+		).isLength({ min: 5 }),
+	],
 	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
         console.log(req.body.email)
 		// const errors = validationResult(req);
 		// console.log(errors)
@@ -132,7 +142,17 @@ router.post(
 		}
 	}
 );
-router.post("/changepassword",auth,async (req,res)=>{
+router.post("/changepassword",
+[
+	check(
+		"password",
+		"Please enter password with 6 or more characters"
+	).isLength({ min: 5 }),
+],auth,async (req,res)=>{
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
 	try{
 		const user=await User.findById(req.user.id)
 		const isMatch = await bcrypt.compare(req.body.CurrentPassword, user.password);

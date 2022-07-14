@@ -8,6 +8,7 @@ const trip=require("../model/Trip")
 const mongoose=require("mongoose");
 const Trip = require("../model/Trip");
 let nodemailer = require('nodemailer');
+const { check, validationResult } = require("express-validator");
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -18,7 +19,22 @@ let transporter = nodemailer.createTransport({
 });
 
 
-router.post('/createtrip',auth,async(req,res)=>{
+router.post('/createtrip',[
+    check("operatorName", "Please enter only string").isAlpha(),
+    check("departureLocation", "Please enter only string").isAlpha(),
+    check("arrivalLocation", "Please enter only string").isAlpha(),
+    check(
+        "departureTime",
+        "Please enter only number"
+    ).isNumeric(),
+    check(
+        "duration",
+        "Please enter only number"
+    ).isNumeric()],auth,async(req,res)=>{
+        const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
     try{
         console.log("suriya")
         const created_on = moment(new Date());
@@ -121,11 +137,11 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
             if(find){
             
                 find.map((index)=>{
-                     mailList.push(index.email)
-                })
+                    //  mailList.push(index.email)
+                
                 let mailOptions = {
                  from: 'suriyaprakash0203@gmail.com',
-                 to: mailList,
+                 to: index.email,
                  subject: 'Trip canceled',
                  text: 'You"r money will refund'
                };
@@ -135,7 +151,7 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
                  } else {
                    console.log('Email sent: ' + info.response);
                  }
-               });
+               });})
              }
         // id=req.params.id.toString()
         // console.log(mongoose.Types.ObjectId.isValid(id));
@@ -145,8 +161,8 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
         console.log(data)
         if(data){
             const delete_num=await Trip.findOneAndDelete({_id:id})
-            const delete_booking=await Bookings.find({tripId:id})
-            delete_booking.delete()
+            const delete_booking=await Bookings.deleteMany({tripId:id})
+            // delete_booking.delete()
             
             res.status(200).json({
             message:"success"

@@ -96,6 +96,7 @@ const Home = () => {
                     paddingLeft: '20px'
                 }}
                 type="date"
+                min={new Date().toISOString().split('T')[0]}
                 value={date} 
                 onChange={(e)=>setDate(e.target.value)} 
             />  

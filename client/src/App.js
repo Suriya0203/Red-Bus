@@ -30,6 +30,7 @@ import Mytrip from './components/Mytrip'
 import Ticket from './components/Ticket'
 import CancelBooking from './components/CancelBooking'
 // import profile_page from './components/profile2'
+import Logout_auth from './components/Logout'
 if (localStorage.token) {
 
 	setAuthToken(localStorage.token);
@@ -58,6 +59,10 @@ const App = ({user}) => {
                    <Route 
                       path = '/viewbus'
                       element = { <Viewbus2 /> }
+                  />
+                   <Route 
+                      path = '/logout'
+                      element = { <Logout_auth /> }
                   />
                   <Route 
                       path = '/createtrip/:id'

@@ -33,7 +33,8 @@ import {
     FETCH_TICKET_SUCCESS,
     FETCH_TICKET_FAILURE,
     CANCEL_BOOKING_SUCCESS,
-    CANCEL_BOOKING_FAILURE
+    CANCEL_BOOKING_FAILURE,
+    LOGOUT_SUCCESS
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -500,4 +501,14 @@ async (dispatch) => {
 			type: CANCEL_BOOKING_FAILURE,
 		});
 	}
+};
+
+///
+
+export const logout = () => async(dispatch) => {
+	console.log("logout")
+	localStorage.removeItem("token");
+    window.location.reload(false)
+	console.log('suriya')
+	dispatch({ type: LOGOUT_SUCCESS });
 };
