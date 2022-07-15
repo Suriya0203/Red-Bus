@@ -50,26 +50,12 @@ function ViewSeats ({trip, getTripById}) {
     const [seats, setSeats] = useState();
     const [searchSeat, setSearchSeat] = useState(0);
     const [getDetails, setGetdetails] = useState(0);
-    const [values, setValues] = useState("")
+    const [values, setValues] = useState('')
     const [seatNumber, setSeatNumber] = useState([]);
     const params = useParams();
     const tripId = params.id2;
     const busId = params.id1
-    // const [formData, setFormdata] = useState({
-    //     email : "", 
-    //     phoneNumber : "", 
-    //     fare : 0, 
-    //     busId : "",
-    //     tripId : "", 
-    //     passengerDetails : [
-    //         {
-    //             name : "", 
-    //             age : 0, 
-    //             gender : ""
-    //         }
-    //     ], 
-    //     seatNumber : []
-    // })
+    
     var passengerArray = [];
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhonenumber] = useState();
@@ -126,10 +112,16 @@ function ViewSeats ({trip, getTripById}) {
         setPassengerdetails(newArray);
     }
 
+    const handleSetValues = (text) => {
+        console.log(text);
+        setValues(text)
+    }
+
     const handleSeatBooking = () =>{
         console.log(values)
         const newArr = values.split(",")
-        console.log(newArr.length ," ", seats)
+        console.log("arr length", newArr.length ," ", "total no of seats to book", seats)
+        console.log("newArr", newArr)
         if(newArr.length !== parseInt(seats, 10)) {
             alert("Please select "+seats+" no of seats")
         }
@@ -159,17 +151,17 @@ function ViewSeats ({trip, getTripById}) {
 
 
     if(trip) {
-        var available = trip.availableSeats.length - trip.bookedSeats.length;
-        console.log(available)
+        var available = trip.availableSeats.length;
+        console.log(trip.availableSeats)
         return (
             <div className={classes.viewseats}>
 
                 {(searchSeat === 1) ?                   
                     <div className={classes.main}>
-                        <p>Available Seats Numbers: </p>
+                        <p style={{color:'grey'}}>Available Seats Numbers: </p>
                         {trip.availableSeats.map((j) => {
                             return (
-                                <span>{trip.availableSeats[j]+1}, </span>
+                                <span style={{color:'grey'}}>{j+1}, </span>
                             )
                         })}
                         <input 
@@ -177,9 +169,16 @@ function ViewSeats ({trip, getTripById}) {
                             placeholder = "Type the seat number with comma seperated like (1,2)"
                             value = {values}
                             id = "disableSeat"
-                            onChange = {(e)=>setValues(e.target.value)}
+                            onChange = {e=>handleSetValues(e.target.value)}
                         />
-                        <button onClick={handleSeatBooking}>Proceed to Book</button><br /><br />
+                        <button style={{
+                            backgroundColor: '#e04c54', 
+                            border : 'none', 
+                            borderRadius : '5px', 
+                            width : '200px', 
+                            color :'white',
+                            height:'40px'
+                        }} onClick={handleSeatBooking}>Proceed to Book</button><br /><br />
                             <span className={classes.lowerDeck} style={{float : 'left'}}>
                             <span style={{textAlign:'center', color : '#e04c54', fontSize: '18px', float :'left', width:'fit-content'}}>Lower Deck - Seat no : 1 to 15</span>
                             <br /><br />
@@ -269,7 +268,15 @@ function ViewSeats ({trip, getTripById}) {
                                                             border: '1px solid grey', 
                                                             fontFamily: 'Courier New, Courier, monospace', 
                                                             fontWeight: "bold", 
-                                                            paddingLeft : "20px"
+                                                            paddingLeft : "20px",
+                                                            width: '96%',
+                                                            height : '40px'
+                                                            // padding: '12px 20px',
+                                                            // margin: '8px 0',
+                                                            // display: 'inline-block',
+                                                            // border: '1px solid #ccc',
+                                                            // borderRadius: '4px',
+                                                            // boxSizing: 'border-box'
                                                         }}
                                                         type="number"
                                                         value = {phoneNumber}
@@ -308,7 +315,7 @@ function ViewSeats ({trip, getTripById}) {
                                                     </p>
                                                     <h3 style={{color:'#e04c54'}}>
                                                         Total Fare : ₹ {trip.fare * parseInt(seats, 10)}
-                                                        &ensp;&ensp;<button onClick={proceedToPay}>Proceed to Pay</button>
+                                                        &ensp;&ensp;<button style={{width:'200px', height:'40px', border:'none', borderRadius : '5px', color:'white', backgroundColor:'#e04c54'}} onClick={proceedToPay}>Proceed to Pay</button>
                                                     </h3>
                                                     
                                             </Popup>
@@ -320,14 +327,27 @@ function ViewSeats ({trip, getTripById}) {
                             }
                     </div>
                     
-                    : <div>
-                        <h2>Number of Seats to book<br/>
+                    : <div style={{color:'grey', paddingTop:'30px'}}>
+                        <h2 style={{color:'grey'}}>Number of Seats to book<br/><br />
                             <input
                                 type = "number"
+                                style={{
+                                    height: '30px', 
+                                    width:'200px', 
+                                    borderRadius : '5px', 
+                                    paddingLeft : '10px'
+                                }}
                                 value = {seats}
                                 onChange={(e)=>setSeats(e.target.value)} 
-                            />
-                            <button onClick = {handleSeat}>Search Seat</button>
+                            />&ensp;
+                            <button style={{
+                                width:'100px', 
+                                height:'40px', 
+                                border : 'none', 
+                                color: 'white', 
+                                borderRadius : '5px',
+                                backgroundColor: '#e04c54'
+                            }} onClick = {handleSeat}>Search Seat</button>
                         </h2>
                         Available Seats : {trip.availableSeats.length}
                     </div>
