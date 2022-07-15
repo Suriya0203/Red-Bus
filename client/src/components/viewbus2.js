@@ -39,37 +39,48 @@ function Viewbus ({bus,fetchBuses}) {
         return (
                 <div>
                     <NavBar/><br/><br/><br/>
-                    <div>
-                    {bus.map((index) => {
-                            console.log(index._id)
-                            return (
-                                <div key = {index._id} >
-                                    <table className={classes.box}>
-                                    <div className={classes.boxValue} >
-                                        <td style={{width:'70%'}}>
-                                                <div className={classes.col1} style={{float:'left'}} >
-                                                    <h3>Travels Name :  {index.travels_name}</h3>
-                                                    <p style={{fontSize: '18px'}}>
-                                                        Year : {index.year}
-                                                        <br />
-                                                        Number plate : {index.number_plate}
-                                                        <br />
-                                                        Capacity : {index.capacity}
-                                                        <br />
-                                                        
-                                                    </p>
-                                                </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href={`/createtrip/${index._id}`} class="btn btn-primary btn-lg" role="button"  style={{backgroundColor : '#17a2b8',}}>Createtrip</a>
-                                                </div>
-                                        </td>
-                                        </div>
-                                    </table>
-                                </div>
-                            )  
-                        }) 
-                    }
-                </div>
+
+
+
+                    <div style={{width : '60%', margin :'0 auto', paddingTop:'20px'}}>
+                        {bus.map((index) => {
+                                console.log(index._id)
+                                return (
+                                    <div key = {index._id} >
+                                        <table className={classes.box} style={{borderBottom:'1px solid grey'}}>
+                                            <td style={{width:'50%'}}>
+                                                    <div>
+                                                        <h3>Travels Name :  {index.travels_name}</h3>
+                                                            <p style={{fontSize: '18px'}}>
+                                                                Year : {index.year}
+                                                                <br />
+                                                                Number plate : {index.number_plate}
+                                                                <br />
+                                                                Capacity : {index.capacity}
+                                                                <br />
+                                                                
+                                                            </p>
+                                                    </div>
+                                            </td>
+                                            <td style={{width:'15%'}}>
+                                                <a href={`/createtrip/${index._id}`}>
+                                                    <button
+                                                        class="btn btn-primary btn-lg" 
+                                                        style={{backgroundColor : '#e04c54', color:'white', borderRadius:'5px', border:'none', width:'130px', height:'50px'}}
+                                                    >
+                                                        Create Trip
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            {/* </div> */}
+                                        </table>
+                                        <br />
+                                    </div>
+                                )  
+                            }) 
+                        }
+                    </div>
+
                 </div>
         )
     }
