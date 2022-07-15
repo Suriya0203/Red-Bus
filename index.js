@@ -32,7 +32,7 @@ app.use("/auth", (authRoute));
 app.use("/bus", (busroute));
 app.use("/trip", (triproute));
 app.use("/booking",(Bookings))
-
+app.use(express.static(path.resolve(__dirname, "./client/build")))
 app.listen(process.env.PORT,()=>{
     console.log("server is listening")
 })
