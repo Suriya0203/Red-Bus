@@ -1,170 +1,177 @@
 
    .logo {
-        height: 70px;
-        width: 150px;
-   }
+    height: 70px;
+    width: 150px;
+}
 
-   .navbar{  
-    height: 90px;
-    width: 100%;
-    padding: 19px 100px;
-    background-color: white;
-    position: fixed;
-    top: 0;
-  }
+.navbar{  
+height: 10%;
+width: 100%;
+background-color: white;
+position: fixed;
+top: 0;
+left:0;
+}
 
-  .navbar .nav-header{
-    display: inline;
-    top : 0;
-  }
-  .navbar .nav-header .nav-logo{
-    display: inline-block;
-    margin-top: -7px;
-    color: grey;
-  }
-  .navbar .nav-links{
-    display: inline;
-    float: right;
-    font-size: 18px;
-  }
-   
-  .navbar .nav-links .loginBtn{
-    display: inline-block;
-    padding: 5px 20px;
-    margin-left: 20px;
-    font-size: 17px;
-    color: grey;
-  }
-  .navbar .nav-links a {
-    padding: 10px 50px;
-    text-decoration: none;
-    width : 250px;
-    font-weight: 550;
-    color: grey;
-  }
+.navbar .nav-header{
+display: inline;
+
+}
+.navbar .nav-header .nav-logo{
+display: inline-block;
+margin-top: -7px;
+color: grey;
+}
+.navbar .nav-links{
+display: inline;
+float: right;
+font-size: 18px;
+}
+
+.navbar .nav-links .loginBtn{
+display: inline-block;
+/* padding: 5px 20px;
+margin-left: 20px; */
+font-size: 17px;
+color: grey;
+}
+.navbar .nav-links a {
+/* padding: 10px 30px; */
+text-decoration: none;
+width : 100px;
+font-weight: 550;
+color: grey;
+}
+
+.navbar #nav-check, .navbar .nav-btn{
+display: none;
+}
+
+@media (max-width:700px) {
+.navbar .nav-btn{
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.navbar .nav-btn label {
+  display: inline-block;
+  width: 80px;
+  height: 70px;
+  padding: 25px;
+}
+.navbar .nav-btn label span {
+  display: block;
+  height: 10px;
+  width: 25px;
+  border-top: 3px solid #eee;
+}
+.navbar .nav-btn label:hover, .navbar #nav-check:checked ~ .nav-btn label {
+  background-color: white;
+  transition: all 0.5s ease;
+}
+.navbar .nav-links{
+  position: absolute;
+  display: block;
+  text-align: center;
+  width: 50%;
+  background-color: white;
+  transition: all 0.3s ease-in;
+  overflow-y: hidden;
+  top: 70px;
+  right: 0px;
+}
+.navbar .nav-links a {
+  display: block;
+}
+
+.navbar #nav-check:not(:checked) ~ .nav-links {
+  height: 0px;
+}
+
+.navbar #nav-check:checked ~ .nav-links {
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+.navbar .nav-links .loginBtn {
+  padding: 10px 40px ;
+  margin: 20px;
+  font-size:  18px;
+  font-weight: bold;
+  color: grey;
+}
+
+.navbar .nav-links .dropdown, .navbar .nav-links {
+  float: none;
+  width: 100%;
+}
+.navbar .nav-links .drop-content, .navbar .nav-links {
+  position: relative;
   
-  .navbar #nav-check, .navbar .nav-btn{
-    display: none;
-  }
-   
-  @media (max-width:700px) {
-    .navbar .nav-btn{
-      display: inline-block;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-    }
-    .navbar .nav-btn label {
-      display: inline-block;
-      width: 80px;
-      height: 70px;
-      padding: 25px;
-    }
-    .navbar .nav-btn label span {
-      display: block;
-      height: 10px;
-      width: 25px;
-      border-top: 3px solid #eee;
-    }
-    .navbar .nav-btn label:hover, .navbar #nav-check:checked ~ .nav-btn label {
-      background-color: white;
-      transition: all 0.5s ease;
-    }
-    .navbar .nav-links{
-      position: absolute;
-      display: block;
-      text-align: center;
-      width: 50%;
-      background-color: white;
-      transition: all 0.3s ease-in;
-      overflow-y: hidden;
-      top: 70px;
-      right: 0px;
-    }
-    .navbar .nav-links a {
-      display: block;
-    }
-   
-    .navbar #nav-check:not(:checked) ~ .nav-links {
-      height: 0px;
-    }
-   
-    .navbar #nav-check:checked ~ .nav-links {
-      height: calc(100vh - 70px);
-      overflow-y: auto;
-    }
-    .navbar .nav-links .loginBtn {
-      padding: 10px 40px ;
-      margin: 20px;
-      font-size:  18px;
-      font-weight: bold;
-      color: grey;
-    }
+  background-color: rgb(220, 220, 250);
+  top: 0px;
+  left: 0px;
+  /* right : '50px' */
+}
 
-    .navbar .nav-links .dropdown, .navbar .nav-links {
-      float: none;
-      width: 100%;
-    }
-    .navbar .nav-links .drop-content, .navbar .nav-links {
-      position: relative;
-      
-      background-color: rgb(220, 220, 250);
-      top: 0px;
-      left: 0px;
-    }
+.navbar .nav-links .drop-content a {
+  color: grey;
+}  
 
-    .navbar .nav-links .drop-content a {
-      color: grey;
-    }  
-   
-  }
+}
 
-  .dropdown{
-    position: relative;
-    display: inline-block;
-  }
-  .drop-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 120px;
-    font-size: 16px;
-    top: 34px;
-    z-index: 1;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
-  }
+.dropdown{
+position: relative;
+display: inline-block;
+}
+.drop-content {
+display: none;
+position: absolute;
+height : fit-content;
+width : fit-content;
+background-color: white;
+min-width: 120px;
+font-size: 16px;
+top: 62px;
+right : 10px;
+z-index: 1;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
 
-  .dropdown:hover .drop-content {
-    display: block;
-    border-radius: 5px;
-  }
+.dropdown:hover .drop-content {
+display: block;
+border-radius: 5px;
+}
 
-  .drop-content a {
-    padding: 12px 10px;
-    border : none;
-    display: block;
-    transition: all 0.5s ease !important;
-  }
+.drop-content a {
+padding: 12px 10px;
+border : none;
+display: block;
+transition: all 0.5s ease !important;
+}
 
-  .drop-content a:hover{
-    background-color: rgb(233, 223, 223);
-    color: black
-  }
+.drop-content a:hover{
+background-color: rgb(233, 223, 223);
+color: black
+}
 
-  .columns {
-    Width: 100%;
-  }
-  .column {
-    width:100%;
-  }
-  @media (min-width: 48em) {
-    .column {
-      width: 50%;
-      float:left;
-    }
-    .columns {
-      content: "";
-      display: table;
-      clear: both;
-    }
-  }
+.columns {
+Width: 100%;
+}
+.column {
+width:60%;
+}
+.column2{
+  width : '40%'
+}
+@media (min-width: 48em) {
+.column {
+  width: 50%;
+  float:left;
+}
+.columns {
+  content: "";
+  display: table;
+  clear: both;
+}
+}
