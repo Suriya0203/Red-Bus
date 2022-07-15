@@ -1,9 +1,8 @@
-// import { model } from "mongoose";
-import React,{ useState } from "react"
+import React,{ useState, useEffect } from "react"
 import './Addbuss.css'
 import NavBar from './NavBar'
-import { Addbus_action } from "../actions/auth";
-import { connect } from "react-redux";
+import { Addbus_action, loadUser } from "../actions/auth";
+import { connect, useSelector } from "react-redux";
 function Addbus({Addbus_action}){
     const [formData, setFormData] = useState({
       number_plate: "",
@@ -12,7 +11,13 @@ function Addbus({Addbus_action}){
       capacity:"" 
         
 	});
-    const { number_plate, travels_name,year, capacity} = formData;
+  const { number_plate, travels_name,year, capacity} = formData;
+
+  // useEffect(() => {
+  //   loadUser();
+  // })
+
+  // const {user} = useSelector(state => state.auth.user)
 
 	const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,7 +44,7 @@ function Addbus({Addbus_action}){
       
     //   }
     //   else{
-    //     alert('Enter year is not correct')
+    //     alert('Enter a valid date')
     //   }
 		// console.log("suriya")
 	
@@ -47,53 +52,79 @@ function Addbus({Addbus_action}){
 	
 
 	}
-    return (
-<div>
-<NavBar /><br/><br/><br/><br/> <br/><br/>
-{/* <h1 style={{
-    textAlign:"center"
-}}>ADD BUS</h1> */}
-<div class="addbus">
-{/* <NavBar /> */}
-<form onSubmit={(e) => onSubmit(e)}>
-  <label for="numplate">number_plate</label>
-  <input type="text" id="numplate" name="number_plate" 
-  value={number_plate}
-  onChange={(e) => onChange(e)}required
-  
-  placeholder="Enter number plate.."/>
+  // if(user && user.is_admin === 'yes')
+  // {
+  return (
+      <div>
+          <NavBar />
+          <p style={{paddingTop:'50px'}}></p>
+          <div style={{width:'50%', margin:'0 auto', color: 'grey'}}>
+            <div class="addbus">
+              <h3 style={{textAlign:'center', color : '#e04c54'}}>Add New Bus</h3>
+              <form onSubmit={(e) => onSubmit(e)}>
 
-  <label for="travels_name">travels_name</label>
-  <input type="text" id="travels_name" name="travels_name" 
-  value={travels_name}
-  onChange={(e) => onChange(e)}
-  required
-  placeholder="Enter travels name.."/>
+                <label for="numplate">Number Plate</label>
+                <input 
+                  type="text" 
+                  id="numplate" 
+                  name="number_plate" 
+                  value={number_plate}
+                  onChange={(e) => onChange(e)}
+                  required
+                  placeholder="Enter Number Plate"
+                />
 
-  <label for="year">year</label>
-  <input type="date" id="year" max={new Date().toISOString().split('T')[0]} name="year" 
-   value={year}
-   onChange={(e) => onChange(e)}required
-  placeholder="Enetr vehicle year.."/>
-  <label for="capacity">capacity</label>
-  <input type="number" id="capacity" name="capacity"
-   value={capacity}required
-   onChange={(e) => onChange(e)}
-    placeholder="Enetr vehicle capacity.."/>
-  
-  {/* <label for="country">Country</label>
-  
-  <select id="country" name="country">
-    <option value="australia">Australia</option>
-    <option value="canada">Canada</option>
-    <option value="usa">USA</option>
-  </select> */}
+                <label for="travels_name">Travels Name</label>
+                <input 
+                  type="text" 
+                  id="travels_name" 
+                  name="travels_name" 
+                  value={travels_name}
+                  onChange={(e) => onChange(e)}
+                  required
+                  placeholder="Enter Travels Name"
+                />
 
-  <input type="submit" value="Submit"/>
-</form>
-</div></div>
+                <label for="year">Year</label>
+                <input 
+                  type="date" 
+                  id="year" 
+                  name="year" 
+                  value={year}
+                  onChange={(e) => onChange(e)}
+                  required
+                  placeholder="Enter Vehicle Year"
+                />
+
+                <label for="capacity">Capacity</label>
+                <input 
+                  type="number" 
+                  id="capacity" 
+                  name="capacity"
+                  style={{
+                    width: '100%',
+                    padding: '12px 20px',
+                    margin: '8px 0',
+                    display: 'inline-block',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    boxSizing: 'border-box'
+                  }}
+                  value={capacity} required
+                  onChange={(e) => onChange(e)}
+                  placeholder="Enter Vehicle Capacity"/>
+                
+                <input type="submit" value="Submit"/>
+              </form>
+            </div>
+          </div>
+      </div>
 
     );
+  // }
+  // else{
+  //   window.location.href = "http://localhost:3000/"
+  // }
 }
 const mapDispatchToProps=dispatch=>{
   return {
