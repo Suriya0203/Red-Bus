@@ -1,5 +1,6 @@
 var express = require("express")
 var app = express()
+const path = require('path');
 const connectDB = require('./config/db')
 const authRoute = require("./routes/auth")
 const busroute=require("./routes/bus")
@@ -32,7 +33,7 @@ app.use("/auth", (authRoute));
 app.use("/bus", (busroute));
 app.use("/trip", (triproute));
 app.use("/booking",(Bookings))
-app.use(express.static(path.resolve(__dirname, "./client/build")))
+app.use(express.static(path.resolve(__dirname, "./client")))
 app.listen(process.env.PORT,()=>{
     console.log("server is listening")
 })
