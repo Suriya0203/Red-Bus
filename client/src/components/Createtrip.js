@@ -5,10 +5,10 @@ import { useParams,Navigate} from 'react-router-dom';
 import NavBar from './NavBar'
 import { Createtrip_action} from "../actions/auth";
 import { connect } from "react-redux";
-// import NavBar from  './NavBar'
+
 function Createtrip({Createtrip_action}){
   console.log("suriya")
-  // console.log(id)
+
       const params = useParams();
     const id=params.id
     console.log(id)
@@ -37,11 +37,11 @@ function Createtrip({Createtrip_action}){
     // setFormData({ ...formData, [busId]:id });
 		e.preventDefault();
     // if(date>=dateObj){//year_3<year_2 && month_2<month&&year_2<day){
-    Createtrip_action(formData)
+      Createtrip_action(formData)
     
     // }
     // else{
-    //   alert('Enter year is not correct')
+    //   alert('Enter a valid trip date')
     // }
 	
 	
@@ -49,69 +49,94 @@ function Createtrip({Createtrip_action}){
 	}
     return (
 <div>
-<NavBar /><br/><br/><br/><br/> <br/><br/>
-{/* <h1 style={{
-    textAlign:"center"
-}}>ADD BUS</h1> */}
-<div class="addbus">
-{/* <NavBar /> */}
-<form onSubmit={(e) => onSubmit(e)}>
-  <label for="operatorName">Opertator name</label>
-  <input type="text" id="operatorName" name="operatorName" 
-  value={operatorName}
-  onChange={(e) => onChange(e)}required
-  
-  placeholder="Enter operator name.."/>
+<NavBar /><br/><br/><br/><br/>
+  <div style={{
+    width:'60%', 
+    margin:'0 auto'
+  }}>
+      <div class="addbus">
+        <form onSubmit={(e) => onSubmit(e)}>
+          <label for="operatorName">Operator Name</label>
+          <input type="text" id="operatorName" name="operatorName" 
+          value={operatorName}
+          onChange={(e) => onChange(e)}required
+          
+          placeholder="Enter Operator Name"/>
 
-  <label for="departureLocation">departureLocation</label>
-  <input type="text" id="departureLocation" name="departureLocation" 
-  value={departureLocation}
-  onChange={(e) => onChange(e)}
-  required
-  placeholder="Enter departurelocation.."/>
+          <label for="departureLocation">Departure Location</label>
+          <input type="text" id="departureLocation" name="departureLocation" 
+          value={departureLocation}
+          onChange={(e) => onChange(e)}
+          required
+          placeholder="Enter Departure Location"/>
 
-  <label for="departureTime">departureTime</label>
-  <input type="number" id="departureTime" name="departureTime" min="1" max="24"
-   value={departureTime}
-   onChange={(e) => onChange(e)}required
-  placeholder="Enetr departureTime.."/>
-  <label for="arrivalLocation">arrivalLocation</label>
-  <input type="text" id="arrivalLocation" name="arrivalLocation"
-   value={arrivalLocation}required
-   onChange={(e) => onChange(e)}
-    placeholder="Enetr arrivalLocation.."/>
-      <label for="duration">duration</label>
-  <input type="number" id="duration" name="duration"
-   value={duration}required
-   onChange={(e) => onChange(e)}
-    placeholder="Enetr duration.."/>
+            <label for="arrivalLocation">Arrival Location</label>
+          <input type="text" id="arrivalLocation" name="arrivalLocation"
+          value={arrivalLocation}required
+          onChange={(e) => onChange(e)}
+            placeholder="Enter Arrival Location"/>
+
+          <label for="departureTime">Departure Time</label>
+          <input type="number" id="departureTime" name="departureTime" min="1" max="24"
+          style={{
+            width: '100%',
+            padding: '12px 20px',
+            margin: '8px 0',
+            display: 'inline-block',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            boxSizing: 'border-box'
+          }}
+          value={departureTime}
+          onChange={(e) => onChange(e)}required
+          placeholder="Enter Departure Time"/>
+          
+              <label for="duration">Duration</label>
+          <input type="number" id="duration" name="duration"
+          value={duration} style={{
+            width: '100%',
+            padding: '12px 20px',
+            margin: '8px 0',
+            display: 'inline-block',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            boxSizing: 'border-box'
+          }} required
+          onChange={(e) => onChange(e)}
+            placeholder="Enter Duration"/>
 
 
-      <label for="Trip_date">Trip_date</label>
-  <input type="date" id="Trip_date" min={new Date().toISOString().split('T')[0]} name="Trip_date"
-   value={Trip_date}required
-   onChange={(e) => onChange(e)}
-    placeholder="Enetr Trip_date.."/> 
+              <label for="Trip_date">Trip Date</label>
+          <input type="date" id="Trip_date" name="Trip_date"
+          value={Trip_date}required
+          onChange={(e) => onChange(e)}
+            placeholder="Enetr Trip Date"/> 
 
-<label for="fare">fare</label>
-  <input type="number" id="fare" name="fare"
-   value={fare}required
-   onChange={(e) => onChange(e)}
-    placeholder="Enter fare.."/> 
+        <label for="fare">Fare</label> &ensp;
+          <input type="number" id="fare" name="fare"
+          style={{
+            width: '43%',
+            padding: '12px 20px',
+            margin: '8px 0',
+            display: 'inline-block',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            boxSizing: 'border-box'
+          }}
+          value={fare}required
+          onChange={(e) => onChange(e)}
+            placeholder="Enter Fare"/> 
 
 
-  
-  {/* <label for="country">Country</label>
-  
-  <select id="country" name="country">
-    <option value="australia">Australia</option>
-    <option value="canada">Canada</option>
-    <option value="usa">USA</option>
-  </select> */}
-
-  <input type="submit" value="Submit"/>
-</form>
-</div></div>
+          &ensp;
+          
+          <input type="submit" style={{
+            width:'50%', backgroundColor: '#e04c54', color:'white'
+          }} value="Submit"/>
+        </form>
+    </div>
+  </div>
+</div>
 
     );
 }
