@@ -2,18 +2,16 @@ import React,{useEffect} from 'react';
 import cx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import AirplanemodeActive from '@material-ui/icons/AirplanemodeActive';
+import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
 import VerticalTicketRip from '@mui-treasury/components/rip/verticalTicket';
 import { useVerticalRipStyles } from '@mui-treasury/styles/rip/vertical';
 import { fetchTicket } from '../actions/auth';
-import {connect, useDispatch, useSelector} from 'react-redux'
+import NavBar from './NavBar';
+import {connect} from 'react-redux'
 const mainColor = '#003399';
 const lightColor = '#ecf2ff';
 const borderRadius = 12;
-// function Call(id){
-//   console.log(id,'-----')
-// }
+
 const useStyles = makeStyles(({ palette, breakpoints }) => ({
   card: {
     overflow: 'visible',
@@ -92,7 +90,8 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
     backgroundColor: lightColor,
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%) rotate(90deg)',
+    transform: 'translate(-50%, -50%)'
+    
   },
   flight: {
     fontSize: 14,
@@ -101,7 +100,7 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
     padding: '0 8px',
     borderRadius: 40,
     backgroundColor: '#bed0f5',
-    color: mainColor,
+    color: 'mainColor',
     display: 'block',
   },
   moveLeft: {},
@@ -121,14 +120,17 @@ function PlaneTicketCard({ticket,fetchTicket,trip}) {
     fetchTicket()
 }, []) 
 const day=new Date()
-// const Call=async(e)=>{
-//   e.preventDefault();
-//   console.log("suriya")
 
-// }
 if(ticket){
+  console.log(ticket)
   return (
     <div>   
+      <div>
+      <NavBar />
+      </div>
+     
+      <br /><br /><br /><br/>
+      {(ticket.length) === 0 && "No Bookings"}
        {ticket.map((index) => {
          return(
            <div>
@@ -155,20 +157,34 @@ if(ticket){
       <div className={cx(styles.right, styles.moveRight)}>
         <div className={styles.label}>
           <h2 className={styles.heading}>{trip["0"].departureLocation}</h2>
-          <p className={styles.subheader}>Fare {trip["0"].fare}</p>
+          <p className={styles.subheader}>Fare ₹{trip["0"].fare}</p>
         </div>
         <div className={styles.path}>
           <div className={styles.line}>
-            <AirplanemodeActive className={styles.plane} />
+            <AirportShuttleIcon className={styles.plane} />
           </div>
-          <span className={styles.flight}>{index.tripId}</span><br/>
-          <p className={styles.flight}>No of passenger: {index.passengerDetails.length}</p>
+          <span style={{fontFamily:'cursive'}} className={styles.flight}>
+            {/* {index.tripId} */}
+            Enjoy Your Journey
+          </span><br/>
+          <p className={styles.flight} style={{fontFamily:'cursive'}}>No of passenger: {index.passengerDetails.length}</p>
         </div>
         
         <div className={styles.label}>
           <h2 className={styles.heading}>{trip["0"].arrivalLocation}</h2>
           <p className={styles.subheader}>{trip["0"].Trip_date.slice(0,10)}</p><br/>
-          <a class="btn btn-primary" href={`/cancelbooking/${index._id}`} role="button">Cancel</a>
+          <a class="btn btn-primary" href={`/cancelbooking/${index._id}`} >
+            <button style={{
+              width:'100%', 
+              height : '30px', 
+              backgroundColor: mainColor, 
+              color:'white', 
+              border : 'none', 
+              borderRadius : '5px'
+            }}>
+              Cancel
+            </button>
+          </a>
         
         </div>
       </div>
@@ -182,14 +198,16 @@ if(ticket){
   );}
   else{
     return (
-      <div>No bookings</div>
+      <b style={{color:'#e04c54', textAlign:'center'}}>
+        <h3>Loading...</h3>
+      </b> 
     )
   }
 };
 const mapStateToProps=state=>{
   return {
-      ticket:state.bookings.booking.data,
-      trip:state.bookings.booking.trip
+      ticket:state.booking.booking.data,
+      trip:state.booking.booking.trip
   }
 }
 
