@@ -223,6 +223,7 @@ router.get('/getticket',auth,async(req,res)=>{
 
             console.log(second_data.tripId,'-----',id)
             const trip_data=await Trip.find({_id:id})
+            console.log(trip_data)
             res.status(200).json({
                 data:data,
                 trip:trip_data

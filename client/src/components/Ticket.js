@@ -169,7 +169,14 @@ if(ticket){
           <h2 className={styles.heading}>{trip["0"].arrivalLocation}</h2>
           <p className={styles.subheader}>{trip["0"].Trip_date.slice(0,10)}</p><br/>
           <a class="btn btn-primary" href={`/cancelbooking/${index._id}`} role="button">Cancel</a>
-        
+          
+          {trip.map((find)=>{
+            return(
+              <div>
+            {find._id===index.tripId
+            ?(<h1>{find.Trip_date}</h1>):(<></>)}</div>
+          )})}
+          
         </div>
       </div>
   <br/>
