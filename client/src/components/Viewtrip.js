@@ -40,41 +40,48 @@ function Viewtrip ({trip, fetchTrip,deletetrip}) {
         return (
                 <div>
                     <NavBar/><br/><br/><br/>
-                    <div>
+                    <div style={{width : '60%', margin :'0 auto', paddingTop:'20px'}}>
                     {trip.map((index) => {
                             console.log(index._id)
                             return (
                                 <div key = {index._id} >
-                                    <table className={classes.box}>
-                                    <div className={classes.boxValue} >
-                                        <td style={{width:'70%'}}>
-                                                <div className={classes.col1} style={{float:'left'}} >
-                                                    {/* <h3>Operator Name : {index.operatorName}</h3> */}
+                                    <table className={classes.box} style={{borderBottom:'1px solid grey'}}>
+                                        <td style={{width:'40%'}}>
+                                                <div>
                                                     <p style={{fontSize: '18px'}}>
                                                         Trip Date : {index.Trip_date.slice(0,10)}
                                                         <br />
                                                         Departure Time : {index.departureTime}
                                                         <br />
-                                                        duration : {index.duration}hr
+                                                        Travelling Time : {index.duration}hr
                                                         <br />
-                                                        <b style={{color: '#e04c54'}}>Fare : {index.fare}</b>
+                                                        <h3>
+                                                            <b style={{color: '#e04c54'}}>Fare : ₹{index.fare}</b>
+                                                        </h3>
                                                     </p>
                                                 </div>
-                                                {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#007bff',}}>ViewSeats</a>
-                                                </div> */}
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href={`/bookingdetails/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : '#17a2b8',}}>BookingDetails</a>
-                                                </div>
-                                                {/* <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href="#" class="btn btn-warning" role="button"  style={{backgroundColor : '#e04c54',
-                                            position:"relative",
-                                            right:"737px"}}>Cancel</a>
-                                                </div> */}
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                <a href={`/deletetrip/${index._id}`} class="btn btn-info" role="button"  style={{backgroundColor : 'rgb(223, 75, 75)',}}>Delete</a></div>
                                         </td>
-                                        </div>
+                                        <td style={{width:'15%', margin:'0 auto'}}>
+                                            <a
+                                                href={`/bookingdetails/${index._id}`} 
+                                            >
+                                            <button 
+                                                style={{textDecoration:'none', borderRadius : '5px', width:'130px', height:'50px', border : 'none',color:'white', backgroundColor : '#17a2b8'}} 
+                                                className="btn btn-info"
+                                            >
+                                                BookingDetails
+                                            </button></a>
+                                        </td>
+                                        <td style={{width:'15%', margin:'0 auto'}}>
+                                            <a href={`/deletetrip/${index._id}`}>
+                                            <button 
+                                                style={{textDecoration:'none', borderRadius:'5px', width:'130px', height:'50px', border : 'none', color:'white', backgroundColor : 'rgb(223, 75, 75)'}} 
+                                                className="btn btn-info"
+                                            >
+                                                Delete
+                                            </button></a>
+                                        </td>
+                                        {/* </div> */}
                                     </table>
                                 </div>
                             )  
