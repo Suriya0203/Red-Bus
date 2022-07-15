@@ -9,13 +9,15 @@ import { GET_TRIP_FAILURE, GET_TRIP_SUCCESSS } from '../actions/type'
 import { makeStyles } from '@material-ui/core' 
 const useStyles = makeStyles((theme) => ({
     box : {
-        width: '75%', 
+        width: '70%', 
         border : 'none',
         margin : '0 auto'
     }, 
     boxValue : {
         borderBottom : '1px solid #D3D3D3',
-        paddingLeft : '10px'
+        paddingLeft : '10px',
+        margin:'0 auto', 
+        width : '70%'
     }, 
 }));
 
@@ -116,49 +118,56 @@ function Search ({trip, getTrip}) {
                 />  
                 
                 </div>
+
                 <br />
-                
-                    <div>
-                    {trip.map((index) => {
-                            console.log(index._id)
-                            return (
-                                <div key = {index._id} >
-                                    <table className={classes.box}>
-                                    <div className={classes.boxValue} >
-                                        <td style={{width:'70%'}}>
-                                                <div className={classes.col1} style={{float:'left'}} >
-                                                    {/* <h3>Operator Name : {index.operatorName}</h3> */}
-                                                    <p style={{fontSize: '18px'}}>
-                                                        Trip Date : {index.Trip_date}
-                                                        <br />
-                                                        Departure Time : {index.departureTime}
-                                                        <br />
-                                                        duration : {index.duration}hr
-                                                        <br />
-                                                        <b style={{color: '#e04c54'}}>Fare : {index.fare}</b>
-                                                    </p>
-                                                </div>
-                                                <div className={classes.col2} style={{float:'right', width:'5%', paddingTop:'50px', paddingRight : '200px'}}>
-                                                    <button id={index._id} style={{
-                                                        width : '200px', 
-                                                        height: '50px', 
-                                                        backgroundColor : '#e04c54', 
-                                                        color : 'white', 
-                                                        border : 'none', 
-                                                        borderRadius : '5px', 
-                                                        fontSize: '18px'
-                                                    }} onClick={handleViewSeat}>
-                                                        View Seats
-                                                    </button>
-                                                </div>
-                                        </td>
-                                        </div>
-                                    </table>
-                                </div>
-                            )  
-                        }) 
-                    }
-                </div>
+                   {(trip.length !== 0) ? 
+                   
+                    (
+                   <div>
+                        {trip.map((index) => {
+                                console.log(index._id)
+                                return (
+                                    <div key = {index._id} >
+                                        <table className={classes.box}>
+                                        <div className={classes.boxValue} >
+                                            <td style={{width:'50%'}}>
+                                                    <div className={classes.col1} style={{float:'left', fontSize: '18px'}} >
+                                                        {/* <h3>Operator Name : {index.operatorName}</h3> */}
+                                                        <p>
+                                                            Trip Date : {index.Trip_date.slice(0,10)}<br />
+                                                            Departure Time : {index.departureTime}<br />
+                                                            Duration : {index.duration}hr<br /><br />
+                                                            <b style={{color: '#e04c54'}}>Fare : ₹{index.fare}</b><br/>
+                                                        </p>
+                                                    </div>
+                                                    <div className={classes.col2} style={{float:'right', width:'28%', paddingTop:'30px', paddingRight : '100px'}}>
+                                                        <button id={index._id} style={{
+                                                            width : '200px', 
+                                                            height: '50px', 
+                                                            backgroundColor : '#e04c54', 
+                                                            color : 'white', 
+                                                            border : 'none', 
+                                                            borderRadius : '5px', 
+                                                            fontSize: '18px'
+                                                        }} onClick={handleViewSeat}>
+                                                            View Seats
+                                                        </button><br /><br />
+                                                        <span style={{fontSize:'15px', textAlign:'center', padding:'20px'}}><b>Available Seats : {index.availableSeats.length}</b></span>
+                                                    </div>
+                                            </td>
+                                            </div>
+                                        </table>
+                                    </div>
+                                )  
+                            }) 
+                        }
+                    </div>  )
+                    : (((trip.length === 0) 
+                            ? 
+                                (<div style={{textALign:'center', width:'10%', color:'#e04c54', margin:'0 auto'}}><h3>NO RESULTS</h3></div>) 
+                            : 
+                                (<></>)))}
+                   
             </div>
         )
     }
@@ -166,7 +175,7 @@ function Search ({trip, getTrip}) {
         return (
             <div>
                 <b style={{color:'#e04c54', textAlign:'center'}}>
-                    <h3>No Results</h3>
+                    <h3>Loading</h3>
                 </b>  
             </div>
         )
