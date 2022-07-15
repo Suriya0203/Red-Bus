@@ -73,7 +73,8 @@ export default function (state = initialState, action) {
         case ADD_BUS_SUCCESSFULL:
                 // localStorage.setItem("user", JSON.stringify(payload.user))
                 alert("Bus added successfully")
-                window.location.reload(false)
+                window.location.href =`http://localhost:3000/viewbus`
+                // window.location.reload(false)
                 return {
                     ...state, 
                     loggedIn : true, 
