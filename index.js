@@ -10,6 +10,7 @@ require('dotenv').config();
 var cors = require('cors')
 
 app.use(cors())
+app.use("/",express.static(path.join(__dirname,'./client/build')))
 app.use(function(req, res, next){
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -19,16 +20,12 @@ app.use(function(req, res, next){
 })
 
 
-app.use(express.static(__dirname))
-
 var bodyParser = require('body-parser');    
 // const Bookings = require("./model/Bookings")
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb', extended:true}));
 
-app.get("/",(req,res)=>{
-    res.send("suriya")
-})
+
 app.use("/auth", (authRoute));
 app.use("/bus", (busroute));
 app.use("/trip", (triproute));
@@ -39,7 +36,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
     res.sendFile(path.join(__dirname + './client/build/index.html'));
     });
    }
-app.use("/",express.static(path.join(__dirname,'./client/build')))
+
 app.listen(process.env.PORT||5000,()=>{
     console.log("server is listening")
 })
