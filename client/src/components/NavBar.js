@@ -184,7 +184,7 @@ const NavBar = ({user,type}) => {
                                                 <p className={classes.newPTag}>
                                                     <b>OR</b><br /> 
                                                     
-                                                        <a style={{cursor: "pointer"}}>New User? Sign Up to continue</a>
+                                                        <a style={{cursor: "pointer"}} href='/signup'>New User? Sign Up to continue</a>
                                                     
                                                 </p>
                                                 
