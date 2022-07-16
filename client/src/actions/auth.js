@@ -34,7 +34,9 @@ import {
     FETCH_TICKET_SUCCESS, 
     CANCEL_BOOKING_FAILURE, 
     CANCEL_BOOKING_SUCCESS, 
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS, 
+    REGISTER_SUCCESS, 
+    REGISTER_FAIL
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -451,6 +453,32 @@ export const createbooking = (email, phoneNumber, fare, passengerDetails, tripId
     }
 }
 
+export const register = (formData) => async(dispatch) => {
+    try{
+        console.log(formData)
+        const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+        // const body = JSON.stringify({ name, email, password, age, gender });
+        const res = await axios.post("http://localhost:5000/auth/signup", formData, config)
+        console.log(res.data)
+        dispatch({
+            type: REGISTER_SUCCESS, 
+            payload : res.data
+        })
+        dispatch(loadUser()); 
+        window.location.href ='http://localhost:3000/'
+    }
+    catch(err){
+        console.log(err)
+        dispatch({
+            type : REGISTER_FAIL
+        });
+        // window.location.reload(false)
+    }
+}
 export const fetchMytrip =()=>async(dispatch)=>{
     console.log("suriya")
     try{
