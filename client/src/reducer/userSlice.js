@@ -57,11 +57,12 @@ export default function (state = initialState, action) {
                 user : null, 
             }
         case REGISTER_SUCCESS: 
+        localStorage.setItem("token", payload.token);
             return {
-                ...state, 
-                loggedIn : false, 
-                error : false, 
-                user : null, 
+                ...state,
+				...payload,
+				isAuthenticated: true,
+				loading: false, 
             }
         case REGISTER_FAIL: 
             return {
