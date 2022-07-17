@@ -21,71 +21,89 @@ function Profile({profile,user}){
     setFormData({ ...formData, [e.target.name]: e.target.value });
     const onSubmit = async (e) => {
 		console.log("suriya")
-        // setFormData({ ...formData, [is_admin]:"true"});
 		e.preventDefault();
 		profile(formData)
 	
 
 	}
+  
 	if(user){
     return (
 <div>
-<NavBar /><br/><br/><br/><br/> 
-{/* <h1 style={{
-    textAlign:"center"
-}}>ADD BUS</h1> */}
+<NavBar />
 
-<img src="https://avatoon.me/wp-content/uploads/2021/09/Cartoon-Pic-Ideas-for-DP-Profile-10.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="500" height="300px" style={{
+
+
+<div style={{
+  width:'70%',
+  paddingTop:'100px', 
+  margin : '0 auto'
+}}>
+
+<img src="https://avatoon.me/wp-content/uploads/2021/09/Cartoon-Pic-Ideas-for-DP-Profile-10.png" alt="Admin" style={{
 	//   display: "block",
 	//   marginLeft: "auto",
 	//   marginRight: "auto"
+  float : 'left', 
+  width : '40%', 
+  height : '475px'
 }}/>
-<div class="addbus">
+<div class="addbus" style={{float : 'right', width : '55%'}}>
 {/* <NavBar /> */}
 <form onSubmit={(e) => onSubmit(e)}>
-  <label for="name">name</label>
+  <label for="name">Name</label>
   <input type="text" id="name" name="name" 
   value={name}
   onChange={(e) => onChange(e)}required
   
   placeholder={user.name}/>
 
-  <label for="email">email</label>
+  <label for="email">Email</label>
   <input type="text" id="email" name="email" 
   value={email}
   onChange={(e) => onChange(e)}
   required
   placeholder={user.email}/>
 
-  <label for="phone">phone</label>
+  <label for="phone">Phone Number</label>
   <input type="number" id="phone" name="phone" 
-   value={phone}
+   value={phone} style={{
+    width: '100%',
+      padding: '12px 20px',
+      margin: '8px 0',
+      display: 'inline-block',
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      boxSizing: 'border-box'
+   }}
    onChange={(e) => onChange(e)}required
   placeholder={user.phonenum}/>
-  <label for="age">age</label>
-  <input type="number" id="age" name="age"
+  <label for="age">Age</label>
+  <input type="number" id="age" name="age" style={{
+    width: '100%',
+    padding: '12px 20px',
+    margin: '8px 0',
+    display: 'inline-block',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    boxSizing: 'border-box'
+  }}
    value={age}required
    onChange={(e) => onChange(e)}
     placeholder={user.age}/>
-    <label for="gender">gender</label>
+    <label for="gender">Gender</label>
   <input type="text" id="gender" name="gender"
    value={gender}required
    onChange={(e) => onChange(e)}
     placeholder={user.gender}/>
-  {/* <label for="country">Country</label>
-  
-  <select id="country" name="country">
-    <option value="australia">Australia</option>
-    <option value="canada">Canada</option>
-    <option value="usa">USA</option>
-  </select> */}
 
   <input type="submit" value="Update"/>
 </form>
-</div></div>
+</div></div></div>
 
     );
 }}
+
 const mapStateToProps=state=>{
 	return {
 		user:state.auth.user

@@ -4,7 +4,7 @@ import {
     VIEW_TRIP_FAILURE,
     VIEW_TRIP_SUCCESSS,
     CREATE_TRIP_FAILURE,
-    CREATE_TRIP_SUCCESSFULL,
+    CREATE_TRIP_SUCCESSFULL, 
     CANCEL_BOOKING_SUCCESS,
     CANCEL_BOOKING_FAILURE
     } from '../actions/type'
@@ -34,7 +34,9 @@ import {
           };
           case CREATE_TRIP_SUCCESSFULL:
             alert("Trip created successfully")
-            window.location.reload(false)
+            window.location.href =`http://localhost:3000/viewtrip`
+
+            // window.location.reload(false)
         case CREATE_TRIP_FAILURE:
           
           case GET_TRIP_SUCCESSS : 
@@ -51,14 +53,14 @@ import {
             error : action.payload, 
             trip : []
           };
-        case CANCEL_BOOKING_SUCCESS:
+          case CANCEL_BOOKING_SUCCESS:
           // return <Navigate to="/ticket" />;
           // alert(action.payload.msg)
-          window.location.href="/ticket"
+          window.location.href="/mytrip"
 
         case CANCEL_BOOKING_FAILURE:
           // alert(action.payload.msg)
-          window.location.href="/ticket"
+          window.location.href="/mytrip"
         default:
         
           return state;

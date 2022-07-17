@@ -57,11 +57,12 @@ export default function (state = initialState, action) {
                 user : null, 
             }
         case REGISTER_SUCCESS: 
+        localStorage.setItem("token", payload.token);
             return {
-                ...state, 
-                loggedIn : false, 
-                error : false, 
-                user : null, 
+                ...state,
+				...payload,
+				isAuthenticated: true,
+				loading: false, 
             }
         case REGISTER_FAIL: 
             return {
@@ -73,7 +74,8 @@ export default function (state = initialState, action) {
         case ADD_BUS_SUCCESSFULL:
                 // localStorage.setItem("user", JSON.stringify(payload.user))
                 alert("Bus added successfully")
-                window.location.reload(false)
+                window.location.href =`http://localhost:3000/viewbus`
+                // window.location.reload(false)
                 return {
                     ...state, 
                     loggedIn : true, 

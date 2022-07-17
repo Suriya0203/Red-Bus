@@ -87,55 +87,58 @@ router.post(
 );
 router.post(
 	"/signup",
-	[
-		check("name", "Name is required").not().isEmpty(),
-		check("email", "Please include a valid email").isEmail(),
-		check(
-			"password",
-			"Please enter password with 6 or more characters"
-		).isLength({ min: 5 }),
-	],
+	// [
+	// 	check("name", "Name is required").not().isEmpty(),
+	// 	check("email", "Please include a valid email").isEmail(),
+	// 	check(
+	// 		"password",
+	// 		"Please enter password with 6 or more characters"
+	// 	).isLength({ min: 5 }),
+	// ],
 	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
+		console.log(req.body)
+		// const errors = validationResult(req);
+		// if (!errors.isEmpty()) {
+		// 	return res.status(400).json({ errors: errors.array() });
+		// }
 
-		const { name, email, password,age,gender,is_admin } = req.body;
+		const { name, email, password,age,gender } = req.body;
 
 		try {
 			// See if user exists
-			let user = await User.findOne({ email });
-
-			if (user) {
+			let user = await User.find({email : email });
+			console.log("user",user)
+			if (user.length > 0) {
 				res.status(400).json({ errors: [{ msg: "User already exists" }] });
 			}
-			user = new User({
+			else{
+			const newUser = new User({
 				name,
 				email,
 				password,
                 age,gender,
-				is_admin
 			});
 
 			//Encrypt Password
 			const salt = await bcrypt.genSalt(10);
 
-			user.password = await bcrypt.hash(password, salt);
-
-			await user.save();
+			newUser.password = await bcrypt.hash(password, salt);
+			console.log("newUser ", newUser)
+			await newUser.save();
 
 			//Return jsonwebtoken
 			const payload = {
 				user: {
-					id: user.id,
+					id: newUser.id,
 				},
 			};
-
-			jwt.sign(payload, jwtSecret, { expiresIn: 3 }, (err, token) => {
-				if (err) throw err;
-				res.json({ token });
+			console.log(payload)
+			jwt.sign(payload, jwtSecret, { expiresIn: "5 days" }, (err, token) => {
+				if (err) {console.log(err); throw err; }
+				console.log(token)
+				res.status(200).json({ token });
 			});
+			}
 		} catch (err) {
 			console.log(err)
 			res.status(500).send("Server error");

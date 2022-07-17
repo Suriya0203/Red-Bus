@@ -8,7 +8,7 @@ import store from './app/store'
 import './App.css';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import TermsAndCondition from './components/TermsAndCondition';
+import Register from './components/Register'
 import Addbus from './components/Addbus';
 import {connect} from 'react-redux'
 // import Viewbus from './components/Viewallbus'
@@ -60,7 +60,7 @@ const App = ({user}) => {
                       path = '/viewbus'
                       element = { <Viewbus2 /> }
                   />
-                   <Route 
+                  <Route 
                       path = '/logout'
                       element = { <Logout_auth /> }
                   />
@@ -73,10 +73,6 @@ const App = ({user}) => {
                       element = { <PlaneTicketCard /> }
                   />
                   <Route 
-                      path = '/info/termscondition'
-                      element = { <TermsAndCondition /> }
-                  />
-                   <Route 
                       path = '/viewtrip'
                       element = { <Viewtrip /> }
                   />
@@ -124,6 +120,10 @@ const App = ({user}) => {
                    <Route 
                       path = '/check2'
                       element = { <Viewbus2 /> }
+                  />
+                  <Route 
+                      path = '/signup'
+                      element = { <Register /> }
                   />
               </Routes>
           </BrowserRouter>

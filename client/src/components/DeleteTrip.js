@@ -81,6 +81,12 @@ function DeleteTrip ({trip, getBooking,deletetrip}) {
                             )  
                         }) 
                     }
+                    <br />
+                    <a href='http://localhost:3000/'>
+                            <button style={{width:'180px', marginLeft:'40%', height : '40px', border:'none', borderRadius :'5px', backgroundColor:'#e04c54', color:'white'}}>
+                                Return to Home Page
+                            </button>
+                    </a>
                 </div>
       
         )
@@ -99,7 +105,7 @@ function DeleteTrip ({trip, getBooking,deletetrip}) {
 // export default Search
 const mapStateToProps=state=>{
     return {
-        trip:state.bookings.booking.data
+        trip:state.booking.booking.data
     }
   }
   
@@ -110,3 +116,5 @@ const mapStateToProps=state=>{
   
     }}
   export default connect(mapStateToProps,mapDispatchToProps)(DeleteTrip)
+
+  

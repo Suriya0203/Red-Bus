@@ -5,19 +5,11 @@ const auth=require("../middleware/tokenValidation")
 const trip=require("../model/Trip")
 const moment=require("moment");
 const Bookings = require("../model/Bookings");
-let mongoose = require('mongoose');
+var mongoose = require('mongoose');
 const authSchema=require('../Helpers/BookingValidation');
 const Trip = require("../model/Trip");
 const { body, validationResult } = require("express-validator");
 router.post('/createbooking',auth,async(req,res)=>{
-    // await check('email').isEmail().run(req);
-    // await check('phoneNumber').isNumeric().run(req);
-    // const errors = validationResult(req);
-	// 	if (!errors.isEmpty()) {
-    //         console.log(errors)
-    //         console.log("suriya prakash ----------")
-	// 		return res.status(400).json({ errors: errors.array() });
-	// 	}
     console.log(req.body)
     try{
         const created_on = moment(new Date());
@@ -25,47 +17,36 @@ router.post('/createbooking',auth,async(req,res)=>{
             passengerDetails, email, phoneNumber, tripId, fare, busId, seatNumber,
           } = req.body.email;
         //const fare=
-        // const result=await authSchema.validateAsync(req.body)
+        console.log(busId, email)
+        var oldbookings = [];
+        oldbookings = await Bookings.find({'busId' : busId, 'email' : email})
+        console.log("old bookings",oldbookings.passengerDetails);
+
+        
         const find=await trip.findById(tripId)
-        // const user_find=await Bookings.find({tripId:tripId})
-        // // const check=await user_find.find(phoneNumber)
-        // if(user_find){
-        //     user_find.map((index)=>{
-        //         if(index.phoneNumber===phoneNumber){
-        //             console.log("suriya")
-        //             res.status(401).json({
-        //             msg:"user already booked"
-        //         })
-        //         }
-        //     })
-            // console.log(check)
-            //console.log(user_find,'---------')
-                
-        // }
-        // else{
         console.log(find);
-        if(find){
-            let seats = [];
-            for(let i=0; i<find.bookedSeats; i++)
+        if(find && oldbookings.length === 0){
+            var seats = [];
+            for(var i=0; i<find.bookedSeats; i++)
             {
                 seats.push(find.bookedSeats[i])
             }
-            for(let i =0; i<seatNumber.length; i++)
+            for(var i =0; i<seatNumber.length; i++)
             {
                 seats.push(seatNumber[i]);
             }
             console.log("seats", seats);
 
-            let delSeats = [];
-            for(let i=0; i< find.availableSeats.length; i++)
+            var delSeats = [];
+            for(var i=0; i< find.availableSeats.length; i++)
             {
                 delSeats.push(find.availableSeats[i])
             }
             console.log("delSeats", delSeats)
 
-            for(let i=0; i<seatNumber.length; i++)
+            for(var i=0; i<seatNumber.length; i++)
             {
-                const index = delSeats.indexOf(parseInt(seatNumber[i]));
+                const index = delSeats.indexOf(parseInt(seatNumber[i]-1));
                 if(index > -1)
                 {
                     delSeats.splice(index, 1)
@@ -87,9 +68,15 @@ router.post('/createbooking',auth,async(req,res)=>{
             })
         }
         else{
+            if(oldbookings.length !== 0)
+            {
+                res.status(400).json({
+                    message : "You've already booked a ticket"
+                })
+            }else{
             res.status(401).json({
                 message:"No trip in this ID"
-            })
+            })}
         }
     }
     catch(err){
@@ -124,7 +111,6 @@ router.get("/allbookings",auth,async(req,res)=>{
         })
     }
 })
-
 router.delete("/deletebooking/:id",auth,async(req,res)=>{
     // const id=req.params.id.toString()
     // var Schema = mongoose.Schema;
@@ -215,6 +201,7 @@ router.get("/getbookings/:id",auth,async(req,res)=>{
 router.get('/getticket',auth,async(req,res)=>{
     try{
         const data=await Bookings.find({userId:req.user.id})
+        console.log(data)
         if(data){
             console.log(data.tripId)
             const second_data=await Bookings.findOne({userId:req.user.id})
@@ -223,7 +210,6 @@ router.get('/getticket',auth,async(req,res)=>{
 
             console.log(second_data.tripId,'-----',id)
             const trip_data=await Trip.find({_id:id})
-            console.log(trip_data)
             res.status(200).json({
                 data:data,
                 trip:trip_data
@@ -244,3 +230,4 @@ router.get('/getticket',auth,async(req,res)=>{
 })
 
 module.exports=router
+

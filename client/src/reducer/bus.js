@@ -30,9 +30,10 @@ import {
             error: action.payload,
             bus: []
           };
-          case CREATE_TRIP_SUCCESSFULL:
-            alert("Trip created successfully")
-            window.location.reload(false)
+          // case CREATE_TRIP_SUCCESSFULL:
+          //   alert("Trip created successfully")
+          //   window.location.href =`http://localhost:3000/viewtrip`
+            // window.location.reload(false)
         case GET_BUS_SUCCESSS : 
           return {
             ...state, 

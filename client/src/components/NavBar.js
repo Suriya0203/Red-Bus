@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
     },
     para : {
-        paddingTop : '20px'
+        paddingTop : '0px'
     },
     buttonSection : {
         paddingTop: '20px'
@@ -61,6 +61,7 @@ const NavBar = ({user,type}) => {
     if(type){
         console.log(type.is_admin)
     }
+    console.log(user, type)
     const handleSubmit = (e) =>{
         e.preventDefault();
         console.log(email, password)
@@ -73,10 +74,10 @@ const NavBar = ({user,type}) => {
     const dispatch = useDispatch();
     return (
     <>
-        <div className="navbar" style={{ backgroundColor:"#e04c54",height:"75px"}}>
+        <div className="navbar" style={{ backgroundColor:"#e04c54"}}>
             <div className="nav-header">
                 <div className="nav-logo">
-                    <div style={{position:"relative",bottom:"7px",right:"100px"}}>
+                    <div>
                         <a href='/'>
                         <img src = "https://play-lh.googleusercontent.com/5ZxVI65M9_yQQHgsY2f_lvSFD9E4Oqvfgxkg-E-MZwWt1M65-6HLY3twREAubQtZqqo" className="logo"/></a>
                     </div>
@@ -84,87 +85,18 @@ const NavBar = ({user,type}) => {
             </div>
          
             <div className="nav-links">
-            {/* {  (user!==null) ?
-                    (
-              
-                <div className="dropdown"style={{
-                            position:"relative",
-                            left:"20%",
-                            bottom:"20px",
-                            color:"white"
-                        }}>
-                    <a className="dropBtn"style={{
-                        color:"white"
-                    }}  href="/">
-                        Manage Booking
-                    </a>
-                    <div className="drop-content">
-                        <a href="/">Cancel</a>
-                        <a href="/">Show My Ticket</a>
-                        <a href="/">Email</a>
-                    </div>
-                    
-                </div>
-
-               ):(<></>)} */}
-             
-                {(
-                    type!==null && type.is_admin==="true")?
-                (
-                    <div className="dropdown"style={{
-                        position:"relative",
-                        left:"20%",
-                        bottom:"20px",
-                        color:"white"
-                    }}>
-                    <a  style={{
-                        color:"white"
-                    }} className="dropBtn" href="/">
-                        Manage Trip
-                    </a>
-                    <div className="drop-content">
-                        {/* <a href="/createtrip">Createtrip</a> */}
-                        <a href="/viewtrip">Viewtrip</a>
-                        <a href="/addbus">Addbus</a>
-                        <a href="/viewbus">Viewbus</a>
-                        <a href="/addadmin">Addadmin</a>
-                        
-                    </div>
-                    </div>
-                ):(
-                      (user!==null) ?
-                        (
-                  
-                    <div className="dropdown"style={{
-                                position:"relative",
-                                left:"20%",
-                                bottom:"20px",
-                                color:"white"
-                            }}>
-                        <a className="dropBtn"style={{
-                            color:"white"
-                        }}  href="/">
-                            Manage Booking
-                        </a>
-                        <div className="drop-content">
-                            {/* <a href="/">Cancel</a> */}
-                            <a href="/mytrip">Show My Ticket</a>
-                            {/* <a href="/">Email</a> */}
-                        </div>
-                        
-                    </div>
-    
-                   ):(<></>)
-                )}
-
-
-                {  (user!==null) ?
+                         
+            {  (user!==null) ?
                     (
                         <div className="dropdown" style={{
                             position:"relative",
-                            left:"15%",
+                            // left:"15%",
                             color:"white",
-                            bottom:"4px"
+                            bottom:"4px", 
+                            float : 'right',
+                                paddingTop : '10px', 
+                                paddingLeft:'30px', 
+                                paddingRight : '50px'
                         }}>
                         <a className="dropBtn" href="/">
                         <AccountCircleIcon style={{fontSize: '250%',color:"white"}}/>
@@ -176,7 +108,6 @@ const NavBar = ({user,type}) => {
                         <div className="drop-content">
                             {/* <a href="/createtrip">Createtrip</a> */}
                             <a href="/profile">Profile</a>
-                            <a href="/mytrip">Mytrip</a>
                             <a href="/changepassword">Password</a>
                             <a href="/logout">Logout</a>
                             
@@ -189,7 +120,9 @@ const NavBar = ({user,type}) => {
                             <a className="dropBtn" href="/" style={{
                                 color:"white",
                                 position:"relative",
-                                left:"100px"
+                                // left:"100px"
+                                float : 'right',
+                                padding : '30px'
                             }}>
                                 Login
                             </a>
@@ -200,7 +133,7 @@ const NavBar = ({user,type}) => {
                                     <span style={{margin:"auto"}}>
                                         <div className="columns">
                                             <div className="column">
-                                            <img src={LoginImage} />
+                                            <img src={LoginImage} style={{width:'95%'}} />
                                             </div>
                                             <div className="column">
                                                 <img src={Logo} style={{height:'50px', width:"100px", border:'1px black', margin:"0"}} />
@@ -209,7 +142,7 @@ const NavBar = ({user,type}) => {
                                                 <p className={classes.para}>
                                                     <input 
                                                         style={{
-                                                            width:'315px', 
+                                                            width:'335px', 
                                                             borderRadius: '5px',
                                                             border: '1px solid grey', 
                                                             fontFamily: 'Courier New, Courier, monospace', 
@@ -224,7 +157,8 @@ const NavBar = ({user,type}) => {
 
                                                     <input 
                                                         style={{
-                                                            width:'315px', 
+                                                            width:'310px',
+                                                            height:'40px', 
                                                             borderRadius: '5px',
                                                             border: '1px solid grey', 
                                                             fontFamily: 'Courier New, Courier, monospace', 
@@ -250,19 +184,11 @@ const NavBar = ({user,type}) => {
                                                 <p className={classes.newPTag}>
                                                     <b>OR</b><br /> 
                                                     
-                                                        <a style={{cursor: "pointer"}}>New User? Sign Up to continue</a>
+                                                        <a style={{cursor: "pointer"}} href='/signup'>New User? Sign Up to continue</a>
                                                     
                                                 </p>
                                                 
-                                                <div className={classes.termsAndCondition}>
-                                                    <p>
-                                                        By signing up, you agree to <br />
-                                                        our 
-                                                        <a href='/info/termscondition' style={{cursor:"pointer"}}> Terms and Conditions </a> 
-                                                        and 
-                                                        <a style={{cursor:"pointer"}}> Privacy Policy</a>
-                                                    </p>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </span>
@@ -272,6 +198,63 @@ const NavBar = ({user,type}) => {
                         </div>
                     )
                 }
+
+
+                {(
+                    type!==null && type.is_admin==="yes")?
+                (
+                    <div className="dropdown"style={{
+                        position:"relative",
+                        // left:"20%",
+                        float : 'right',
+                        padding : '30px',
+                        bottom:"20px",
+                        color:"white"
+                    }}>
+                    <a  style={{
+                        color:"white"
+                    }} className="dropBtn" href="/">
+                        Manage Trip
+                    </a>
+                    <div className="drop-content">
+                        {/* <a href="/createtrip">Createtrip</a> */}
+                        <a href="/viewtrip">Viewtrip</a>
+                        <a href="/addbus">Addbus</a>
+                        <a href="/viewbus">Viewbus</a>
+                        <a href="/addadmin">Addadmin</a>
+                        
+                    </div>
+                    </div>
+                ):(
+                    (type!== null && type.is_admin==="no") ?
+                      
+                        (
+                  
+                    <div className="dropdown"style={{
+                                position:"relative",
+                                // left:"20%",
+                                bottom:"20px",
+                                color:"white", 
+                                float : 'right',
+                                padding : '40px', 
+                            }}>
+                        <a className="dropBtn"style={{
+                            color:"white"
+                        }}  href="/mytrip">
+                            Booked Trip
+                        </a>
+                        {/* <div className="drop-content">
+                            <a href="/">Cancel</a>
+                        </div> */}
+                        
+                    </div>
+    
+                   ) : <></>)
+                
+                }
+
+
+                
                 
             </div>
 

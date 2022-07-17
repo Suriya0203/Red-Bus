@@ -11,11 +11,11 @@ router.post("/addbus",auth,async(req,res)=>{
             number_plate, travels_name, year, capacity,
           } = req.body;
 
-        console.log(req.body.NumberPlate)
+        console.log(req.body.number_plate)
         // const check=await user.find({_id:req.payload._id})
         let check=await user.findById(req.user.id)
         console.log(check.is_admin)
-        if(check.is_admin==="true"){
+        if(check.is_admin==="yes"){
         // const find=await bus.findOne({number_plate:number_plate})
         // console.log(find.model)
         // if(find._id===undefined){

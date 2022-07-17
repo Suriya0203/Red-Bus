@@ -27,14 +27,16 @@ import {
     DELETE_TRIP_SUCCESS,
     DELETE_TRIP_FAILURE,
     CREATE_BOOKING_FAILURE, 
-    CREATE_BOOKING_SUCCESS,
-    GET_MY_BOOKING_SUCCESS,
-    GET_MY_BOOKING_FAILURE,
-    FETCH_TICKET_SUCCESS,
-    FETCH_TICKET_FAILURE,
-    CANCEL_BOOKING_SUCCESS,
-    CANCEL_BOOKING_FAILURE,
-    LOGOUT_SUCCESS
+    CREATE_BOOKING_SUCCESS, 
+    GET_MY_BOOKING_FAILURE, 
+    GET_MY_BOOKING_SUCCESS, 
+    FETCH_TICKET_FAILURE, 
+    FETCH_TICKET_SUCCESS, 
+    CANCEL_BOOKING_FAILURE, 
+    CANCEL_BOOKING_SUCCESS, 
+    LOGOUT_SUCCESS, 
+    REGISTER_SUCCESS, 
+    REGISTER_FAIL
 } from './type'
 import setAuthToken from "../utils/setAuthtoken";
 const API_URL = "http://localhost:5000/"
@@ -66,6 +68,7 @@ export const login = (email, password) => async (dispatch) => {
         },
     };
     const body = JSON.stringify({ email, password })
+    console.log(body)
     try{
         const res = await axios   
             .post(API_URL + 'auth/signin', email,password, config);
@@ -80,6 +83,22 @@ export const login = (email, password) => async (dispatch) => {
         dispatch({
             type : LOGIN_FAIL, 
         });
+        if(error.response.status === 401) {
+            alert("User not found!!");
+        }
+        else if(error.response.status === 400) {
+            alert("Password Mismatch!!")
+        }
+        else if(error.response.status === 422) {
+            alert("Invalid Credentials!!");
+        }
+        else if(error.response.status === 500)
+        {
+            alert("Server Error!!! Try Again Later")
+        }
+        else {
+            alert("Error")
+        }
     }
 }
 
@@ -416,16 +435,50 @@ export const createbooking = (email, phoneNumber, fare, passengerDetails, tripId
         dispatch({
             type : CREATE_BOOKING_SUCCESS
         })
+        alert("Ticket Booked Successfully");
+        // window.location.reload(false);
+        window.location.href =`http://localhost:3000/mytrip`
     }
     catch(err) {
         console.log(err)
         dispatch({
             type: CREATE_BOOKING_FAILURE
         })
+        if(err.response.status === 400) {
+            alert("You've already booked a ticket!!");
+        }else{
+            alert("Booking failed")
+        }
+        window.location.href =`http://localhost:3000/mytrip`
     }
 }
 
-
+export const register = (formData) => async(dispatch) => {
+    try{
+        console.log(formData)
+        const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+        // const body = JSON.stringify({ name, email, password, age, gender });
+        const res = await axios.post("http://localhost:5000/auth/signup", formData, config)
+        console.log(res.data)
+        dispatch({
+            type: REGISTER_SUCCESS, 
+            payload : res.data
+        })
+        dispatch(loadUser()); 
+        window.location.href ='http://localhost:3000/'
+    }
+    catch(err){
+        console.log(err)
+        dispatch({
+            type : REGISTER_FAIL
+        });
+        // window.location.reload(false)
+    }
+}
 export const fetchMytrip =()=>async(dispatch)=>{
     console.log("suriya")
     try{
@@ -502,8 +555,6 @@ async (dispatch) => {
 		});
 	}
 };
-
-///
 
 export const logout = () => async(dispatch) => {
 	console.log("logout")

@@ -7,10 +7,11 @@ const moment=require("moment")
 const trip=require("../model/Trip")
 const mongoose=require("mongoose");
 const Trip = require("../model/Trip");
-let nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
+
 const { check, validationResult } = require("express-validator");
 
-let transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'suriyaprakash0203@gmail.com',
@@ -18,6 +19,33 @@ let transporter = nodemailer.createTransport({
   }
 });
 
+router.get('/getSource', auth, async(req,res)=>{
+    try{
+        const sources = await trip.find({}, {departureLocation:1, _id : 0})
+        console.log(sources)
+        res.status(200).json({
+            data : sources
+        })
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).json({message : "Error"})
+    }
+})
+
+router.get('/getDestination', auth, async(req,res)=>{
+    try{
+        const destination = await trip.find({}, {arrivalLocation:1, _id : 0})
+        console.log(destination)
+        res.status(200).json({
+            data : destination
+        })
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).json({message : "Error"})
+    }
+})
 
 router.post('/createtrip',[
     check("operatorName", "Please enter only string").isAlpha(),
@@ -45,7 +73,7 @@ router.post('/createtrip',[
         // const check=await user.find({_id:req.payload._id})
         let check=await user.findById(req.user.id)
         console.log(check.is_admin)
-        if(check.is_admin==="true"){
+        if(check.is_admin==="yes"){
         // const find=await trip.find({number_plate:number_plate})
         const find=await trip.find({busId:busId})
         console.log(find)
@@ -91,7 +119,7 @@ router.post('/createtrip',[
 
 router.get("/alltrip",auth,async(req,res)=>{
     try{
-        let check=await user.findById(req.user.id)
+        var check=await user.findById(req.user.id)
         console.log(check.is_admin)
         if(check.is_admin==="no"){
             res.status(404).json({
@@ -184,6 +212,7 @@ router.delete('/canceltrip/:id/',auth,async(req,res)=>{
     }
 })
 
+
 router.get("/filtertripbyorigin",auth,async(req,res)=>{
     try{
         let check=await user.findById(req.user.id)
@@ -249,9 +278,12 @@ router.get("/filtertripbydestination",auth,async(req,res)=>{
 router.post('/getTrip', auth, async(req, res) => {
     console.log(req.body)
     try{
+        var date = req.body.date + 'T00:00:00.000+00:00';
+        console.log(date)
         let data = await trip.find({
             departureLocation : req.body.source, 
-            arrivalLocation : req.body.destination
+            arrivalLocation : req.body.destination, 
+            Trip_date : date
         })
         console.log(data);
         if(data) {
